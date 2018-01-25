@@ -1,11 +1,11 @@
-package com.calvo.carolina.bussines.interactors.getallshops
+package com.calvo.carolina.business.interactors.getallshops
 
-import com.calvo.carolina.bussines.interactors.ErrorClosure
-import com.calvo.carolina.bussines.interactors.ErrorCompletion
-import com.calvo.carolina.bussines.interactors.SuccessClosure
-import com.calvo.carolina.bussines.interactors.SuccessCompletion
-import com.calvo.carolina.bussines.model.Shop
-import com.calvo.carolina.bussines.model.Shops
+import com.calvo.carolina.business.interactors.ErrorClosure
+import com.calvo.carolina.business.interactors.ErrorCompletion
+import com.calvo.carolina.business.interactors.SuccessClosure
+import com.calvo.carolina.business.interactors.SuccessCompletion
+import com.calvo.carolina.business.model.Shop
+import com.calvo.carolina.business.model.Shops
 
 
 class GetAllShopsInteractorFake: GetAllShopsInteractor

@@ -1,4 +1,4 @@
-package com.calvo.carolina.bussines;
+package com.calvo.carolina.business;
 
 import org.junit.Test;
 

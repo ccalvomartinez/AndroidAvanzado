@@ -1,4 +1,4 @@
-package com.calvo.carolina.bussines.interactors
+package com.calvo.carolina.business.interactors
 
 
 interface  SuccessCompletion<T> {

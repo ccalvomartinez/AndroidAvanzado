@@ -1,4 +1,4 @@
-package com.calvo.carolina.bussines.model
+package com.calvo.carolina.business.model
 
 import java.util.*
 

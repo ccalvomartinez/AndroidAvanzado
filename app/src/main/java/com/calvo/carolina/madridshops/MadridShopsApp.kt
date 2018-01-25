@@ -1,10 +1,10 @@
 package com.calvo.carolina.madridshops
 
-import com.calvo.carolina.bussines.interactors.*
-import com.calvo.carolina.bussines.model.*
+
+import com.calvo.carolina.business.model.*
 import android.support.multidex.MultiDexApplication
 import android.util.Log
-import com.calvo.carolina.bussines.interactors.getallshops.GetAllShopsInteractorFake
+import com.calvo.carolina.business.interactors.getallshops.*
 
 
 class MadridShopsApp: MultiDexApplication()
@@ -16,19 +16,11 @@ class MadridShopsApp: MultiDexApplication()
         super.onCreate()
         Log.d("MadridShops", "onCreate")
        val allShopsInteractor = GetAllShopsInteractorFake()
-        allShopsInteractor.execute(object: SuccessCompletion<Shops>
-        {
-            override fun successCompletion(e: Shops)
-            {
-                Log.d("MadridShops", "Shop count" + e.count())
-            }
-
-        }, object : ErrorCompletion
-        {
-            override fun errorCompletion(errorMessage: String)
-            {
+        allShopsInteractor.execute(
+        { shops: Shops ->
+                Log.d("MadridShops", "Shop count" + shops.count())
+        }, { errorMessage: String ->
                 Log.d("MadridShops", errorMessage)
-            }
         })
 
         allShopsInteractor.execute(

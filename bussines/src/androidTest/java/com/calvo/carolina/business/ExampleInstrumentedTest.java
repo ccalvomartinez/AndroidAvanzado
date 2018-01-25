@@ -1,4 +1,4 @@
-package com.calvo.carolina.bussines;
+package com.calvo.carolina.business;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,6 +1,6 @@
-package com.calvo.carolina.bussines.interactors
+package com.calvo.carolina.business.interactors
 
-import com.calvo.carolina.bussines.model.Shops
+import com.calvo.carolina.business.model.Shops
 
 typealias SuccessClosure = (shops: Shops) -> Unit
 typealias ErrorClosure = (errorMessage: String) -> Unit
