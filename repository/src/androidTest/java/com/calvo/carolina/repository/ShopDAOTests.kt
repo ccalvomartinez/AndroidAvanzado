@@ -40,4 +40,76 @@ class ShopDAOTests
         // Assert
         assertTrue("El id tiene que ser mayor que 0", id > 0)
     }
+
+    @Test
+    @Throws(Exception::class)
+    fun testDeleteAll_given_rows_in_database_returns_true()
+    {
+        // Arrange
+        val shop = ShopDAOModel(1, 1, "MyShop", "", 1.0F, 2.0F, "", "", "", "")
+        val shopDAO = ShopDAO(dbHelper)
+
+        val id = shopDAO.insert(shop)
+        assertTrue("El id tiene que ser mayor que 0", id > 0)
+
+        // Act
+
+        val result = shopDAO.deleteAll()
+
+        // Assert
+        assertTrue("Tiene que devolver TRUE porque hay registros", result)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun testInsert_given_two_rows_inserted_ignore_databaseID()
+    {
+        // Arrange
+        val shop = ShopDAOModel(1, 1, "MyShop", "", 1.0F, 2.0F, "", "", "", "")
+        val shop2 = ShopDAOModel(2, 1, "MyShop2", "", 1.0F, 2.0F, "", "", "", "")
+        val shopDAO = ShopDAO(dbHelper)
+
+        // Act
+        val id = shopDAO.insert(shop)
+        val id2 = shopDAO.insert(shop2)
+
+        // Assert
+        assertTrue("Los ids devueltos deben ser distintos", id != id2)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun testQuery_given_two_rows_inserted_return_two_elements()
+    {
+        // Arrange
+        val shopDAO = ShopDAO(dbHelper)
+        shopDAO.deleteAll()
+        val shop = ShopDAOModel(1, 1, "MyShop", "", 1.0F, 2.0F, "", "", "", "")
+        val shop2 = ShopDAOModel(2, 1, "MyShop2", "", 1.0F, 2.0F, "", "", "", "")
+        shopDAO.insert(shop)
+        shopDAO.insert(shop2)
+
+        // Act
+        val result = shopDAO.query()
+        // Assert
+        assertTrue("Los ids devueltos deben ser distintos", result.size == 2)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun testQueryByID_given_row_inserted_return_correct_element()
+    {
+        // Arrange
+        val shopDAO = ShopDAO(dbHelper)
+        shopDAO.deleteAll()
+        val shop = ShopDAOModel(1, 1, "MyShop", "", 1.0F, 2.0F, "", "", "", "")
+        val databaseID = shopDAO.insert(shop)
+
+        // Act
+        val result = shopDAO.query(databaseID)
+        // Assert
+        assertTrue(result.databaseID == databaseID)
+        assertTrue(result.name == shop.name)
+        assertTrue(result.latitude == shop.latitude)
+    }
 }

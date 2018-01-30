@@ -16,14 +16,15 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopDAOModel>
 
     override fun insert(element: ShopDAOModel): Long
     {
-
-        return dbReadWriteConnection.insert(DBConstants.TABLE_SHOP, null, contentValues(element))
+        val id = dbReadWriteConnection.insert(DBConstants.TABLE_SHOP, null, contentValues(element))
+        return id
     }
 
     fun contentValues(shopDAOModel: ShopDAOModel): ContentValues
     {
         val content = ContentValues()
-        content.put(DBConstants.KEY_SHOP_ID, shopDAOModel.id)
+
+        content.put(DBConstants.KEY_SHOP_ID_JSON, shopDAOModel.id)
         content.put(DBConstants.KEY_SHOP_NAME, shopDAOModel.name)
         content.put(DBConstants.KEY_SHOP_DESCRIPTION, shopDAOModel.description)
         content.put(DBConstants.KEY_SHOP_LATITUDE, shopDAOModel.latitude)
@@ -36,14 +37,18 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopDAOModel>
         return content
     }
 
-    override fun update(id: Long, element: ShopDAOModel): Long
+    override fun update(databaseID: Long, element: ShopDAOModel): Long
     {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return dbReadWriteConnection.update(DBConstants.TABLE_SHOP,contentValues(element),DBConstants.KEY_SHOP_DATABASE_ID + " = ?", arrayOf(databaseID.toString())).toLong()
     }
 
     override fun delete(element: ShopDAOModel): Long
     {
-        return delete(element.id)
+        if (element.databaseID < 1)
+        {
+            return 0
+        }
+        return delete(element.databaseID)
     }
 
     /**
@@ -51,14 +56,14 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopDAOModel>
      * 1. "NAME = PEPE" or "NAME = " + name (esto permite inyección de SQL)
      * 2. WhereClause = "NAME = ? AND LAST = ?" y WhereArguments = arrayOf("pepe", "gonzalez")
      */
-    override fun delete(id: Long): Long
+    override fun delete(databaseID: Long): Long
     {
-         return dbReadWriteConnection.delete(DBConstants.TABLE_SHOP,DBConstants.KEY_SHOP_ID + " = ?", arrayOf(id.toString())).toLong()
+         return dbReadWriteConnection.delete(DBConstants.TABLE_SHOP,DBConstants.KEY_SHOP_DATABASE_ID + " = ?", arrayOf(databaseID.toString())).toLong()
     }
 
-    override fun deleteAll()
+    override fun deleteAll(): Boolean
     {
-        dbReadWriteConnection.delete(DBConstants.TABLE_SHOP,"", arrayOf("")).toLong()
+        return dbReadWriteConnection.delete(DBConstants.TABLE_SHOP,null, null).toLong() > 0
     }
 
     /**
@@ -69,14 +74,45 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopDAOModel>
      *  Cuando nos devuelve el cursor está en la posición BEFORE FIRST
      *  Por eso hay que hacer un moveToFirst() para acceder al registro
      */
-    override fun query(id: Long): ShopDAOModel
+    override fun query(databaseID: Long): ShopDAOModel
     {
-        val cursor = queryCursor(id)
+        val cursor = queryCursor(databaseID)
         cursor.moveToFirst()
 
+        return entityFromCursor(cursor)!!
+
+    }
+
+    override fun query(): List<ShopDAOModel>
+    {
+        val queryResult = ArrayList<ShopDAOModel>()
+
+        val cursor = dbReadOnlyConnection.query(
+                DBConstants.TABLE_SHOP,
+                DBConstants.ALL_COLUMNS,
+                null,
+                null,
+                "",
+                "",
+                DBConstants.KEY_SHOP_DATABASE_ID
+        )
+
+        while (cursor.moveToNext())
+        {
+            queryResult.add(entityFromCursor(cursor)!!)
+        }
+        return queryResult
+    }
+
+    private fun entityFromCursor(cursor: Cursor): ShopDAOModel?
+    {
+        if (cursor.isBeforeFirst || cursor.isAfterLast)
+        {
+            return null
+        }
         return ShopDAOModel(
-                1,
-                cursor.getLong(cursor.getColumnIndex(DBConstants.KEY_SHOP_ID)),
+                cursor.getLong(cursor.getColumnIndex(DBConstants.KEY_SHOP_ID_JSON)),
+                cursor.getLong(cursor.getColumnIndex(DBConstants.KEY_SHOP_DATABASE_ID)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_NAME)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_DESCRIPTION)),
                 cursor.getFloat(cursor.getColumnIndex(DBConstants.KEY_SHOP_LATITUDE)),
@@ -86,24 +122,18 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopDAOModel>
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_OPENING_HOURS)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_ADDRESS))
         )
-
     }
 
-    override fun query(): List<ShopDAOModel>
-    {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun queryCursor(id: Long): Cursor
+    override fun queryCursor(databaseID: Long): Cursor
     {
         return dbReadOnlyConnection.query(
                 DBConstants.TABLE_SHOP,
                 DBConstants.ALL_COLUMNS,
-                DBConstants.KEY_SHOP_ID + " = ?",
-                arrayOf(id.toString()),
+                DBConstants.KEY_SHOP_DATABASE_ID + " = ?",
+                arrayOf(databaseID.toString()),
                 "",
                 "",
-                DBConstants.KEY_SHOP_ID
+                DBConstants.KEY_SHOP_DATABASE_ID
         )
     }
 

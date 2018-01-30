@@ -4,7 +4,11 @@ import android.database.Cursor
 
 interface DAOWritable<T> {
     fun insert(element: T): Long
-    fun update(id: Long, element: T): Long
+    /**
+     * Actualiza el elemento con databaseID con los datos de elemento
+     * Devuelve el número de registros afectados
+     */
+    fun update(databaseID: Long, element: T): Long
     /**
      * deletes the element passed from DB
      */
@@ -13,14 +17,14 @@ interface DAOWritable<T> {
     /**
      * delete the element with id from DB
      */
-    fun delete(id: Long): Long
-    fun deleteAll()
+    fun delete(databaseID: Long): Long
+    fun deleteAll(): Boolean
 }
 
 interface  DAOReadable<T> {
-    fun query(id: Long): T
+    fun query(databaseID: Long): T
     fun query(): List<T>
-    fun queryCursor(id: Long): Cursor
+    fun queryCursor(databaseID: Long): Cursor
 }
 interface DAOPersistable<T>: DAOReadable<T>, DAOWritable<T>
 

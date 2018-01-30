@@ -5,7 +5,8 @@ object DBConstants
     val TABLE_SHOP = "SHOP"
 
     // Table field constants
-    const val KEY_SHOP_ID = "_id"
+    const val KEY_SHOP_DATABASE_ID = "_id"
+    const val KEY_SHOP_ID_JSON = "ID_JSON"
     const val KEY_SHOP_NAME = "NAME"
     const val KEY_SHOP_IMAGE_URL = "IMAGE_URL"
     const val KEY_SHOP_LOGO_IMAGE_URL = "LOGO_IMAGE_URL"
@@ -19,7 +20,9 @@ object DBConstants
     const val KEY_SHOP_OPENING_HOURS = "OPENING_HOURS"
 
     val ALL_COLUMNS = arrayOf(
-            KEY_SHOP_ID, KEY_SHOP_NAME,
+            KEY_SHOP_DATABASE_ID,
+            KEY_SHOP_ID_JSON,
+            KEY_SHOP_NAME,
             KEY_SHOP_IMAGE_URL,
             KEY_SHOP_LOGO_IMAGE_URL,
             KEY_SHOP_ADDRESS,
@@ -29,10 +32,11 @@ object DBConstants
             KEY_SHOP_LONGITUDE,
             KEY_SHOP_OPENING_HOURS)
 
-    val SQL_SCRIPT_CREATE_SHOP_TABLE = (
+    private val SQL_SCRIPT_CREATE_SHOP_TABLE = (
             "create table " + TABLE_SHOP
                     + "( "
-                    + KEY_SHOP_ID + " integer primary key autoincrement, "
+                    + KEY_SHOP_DATABASE_ID + " integer primary key autoincrement, "
+                    + KEY_SHOP_ID_JSON + " integer, "
                     + KEY_SHOP_NAME + " text not null,"
                     + KEY_SHOP_IMAGE_URL + " text, "
                     + KEY_SHOP_LOGO_IMAGE_URL + " text, "
