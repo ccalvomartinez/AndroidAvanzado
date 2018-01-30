@@ -23,14 +23,6 @@ class MadridShopsApp: MultiDexApplication()
                 Log.d("MadridShops", errorMessage)
         })
 
-        allShopsInteractor.execute(
-                { shops: Shops ->
-
-                },
-                { msg: String ->
-
-                }
-        )
     }
     override fun onLowMemory()
     {
