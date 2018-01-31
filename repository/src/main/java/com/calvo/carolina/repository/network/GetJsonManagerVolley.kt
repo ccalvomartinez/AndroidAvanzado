@@ -1,13 +1,42 @@
 package com.calvo.carolina.repository.network
 
-class GetJsonManagerVolley: GetJsonManager
+import android.content.Context
+import android.util.Log
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.calvo.carolina.repository.ErrorClosure
+import com.calvo.carolina.repository.SuccessClosure
+import java.lang.ref.WeakReference
+
+class GetJsonManagerVolley(context: Context): GetJsonManager
 {
-    override fun execute(url: String)
-    {
-        // Get request queue
-
-        // Create request (success, failure)
-
-        // Add request to queue
+    // Actividad -> (Strong) Interactor ->(Strong)  Repository ->(Strong)  Volley ->(Strong)  Activity-Context
+    // Tenemos un ciclo de punteros strong y eso puede causar pérdida de memoria al no poder eliminarse la actividad cuando pulsamos atrás
+    // Entonces el puntero al contexto debe ser weak
+    var weakContext: WeakReference<Context> = WeakReference(context)
+    val requestQueue: RequestQueue by lazy {
+          Volley.newRequestQueue(weakContext.get())
     }
+
+    override fun execute(url: String, success: SuccessClosure, error: ErrorClosure)
+    {
+       // Create request (success, failure)
+        val request = StringRequest( url,
+                Response.Listener
+                {
+                    Log.d("JSON", it)
+                    success(it)
+                },
+                Response.ErrorListener {
+                    error(it.localizedMessage)
+                })
+        // Add request to queue
+        requestQueue.add(request)
+    }
+
+
 }
+
+
