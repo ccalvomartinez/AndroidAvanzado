@@ -2,7 +2,7 @@ package com.calvo.carolina.business.model
 
 import java.util.*
 
-data class Shop(val id: Int, val name: String, val address: String) {
+data class Shop(val id: Int, val name: String, val address: String, val latitude: Double, val logitude: Double) {
 
     init
     {

@@ -25,7 +25,7 @@ class GetJsonManagerVolleyTest
 
     @Test
     @Throws(Exception::class)
-    fun testInsert_given_url_gets_not_null_Json_as_string()
+    fun given_url_gets_not_null_Json_as_string()
     {
         val url = "http://madrid-shops.com/json_new/getShops.php"
 

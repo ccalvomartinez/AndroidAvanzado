@@ -1,6 +1,5 @@
-package com.calvo.carolina.repository
+package com.calvo.carolina.util
 
-
-typealias SuccessClosure = (json: String) -> Unit
+typealias SuccessClosure<T> = (element: T) -> Unit
 typealias ErrorClosure = (errorMessage: String) -> Unit
 typealias CodeClosure = () -> Unit

@@ -3,7 +3,7 @@ package com.calvo.carolina.repository.network.json
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
-class JsonEntitiesParser
+internal class JsonEntitiesParser
 {
     val mapper = jacksonObjectMapper()
 

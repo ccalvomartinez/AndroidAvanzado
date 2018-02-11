@@ -1,6 +1,6 @@
 package com.calvo.carolina.repository.network.json.model
 
-data class ShopJsonModel(
+internal data class ShopJsonModel(
         val id: Long,
         val name: String,
         val img: String,
@@ -21,8 +21,8 @@ data class ShopJsonModel(
         val description_cn: String = "",
         val description_cl: String = "",
         val description_mx: String = "",
-        val gps_lat: Float,
-        val gps_lon: Float,
+        val gps_lat: String,
+        val gps_lon: String,
         val special_offer: Boolean = false,
         val categories: MutableList<String> = mutableListOf(""),
         val keywords_en: String = "",

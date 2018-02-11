@@ -22,7 +22,7 @@ interface DAOWritable<T> {
 }
 
 interface  DAOReadable<T> {
-    fun query(databaseID: Long): T
+    fun query(databaseID: Long): T?
     fun query(): List<T>
     fun queryCursor(databaseID: Long): Cursor
 }

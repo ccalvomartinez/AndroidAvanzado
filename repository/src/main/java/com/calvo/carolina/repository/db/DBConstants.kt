@@ -1,6 +1,6 @@
 package com.calvo.carolina.repository.db
 
-object DBConstants
+internal object DBConstants
 {
     val TABLE_SHOP = "SHOP"
 

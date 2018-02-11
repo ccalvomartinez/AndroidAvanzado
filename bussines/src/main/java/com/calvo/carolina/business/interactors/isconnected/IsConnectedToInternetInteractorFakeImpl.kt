@@ -1,9 +1,10 @@
 package com.calvo.carolina.business.interactors.isconnected
 
-import com.calvo.carolina.business.interactors.CodeClosure
-import com.calvo.carolina.business.interactors.ErrorClosure
+import com.calvo.carolina.util.CodeClosure
+import com.calvo.carolina.util.ErrorClosure
 
-class IsConnectedToInternetInteractorFakeImpl : IsConnectedToInternetInteractor
+
+internal class IsConnectedToInternetInteractorFakeImpl : IsConnectedToInternetInteractor
 {
     override fun execute(success: CodeClosure, errorClosure: ErrorClosure)
     {

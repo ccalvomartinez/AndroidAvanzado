@@ -1,7 +1,7 @@
-package com.calvo.carolina.repository.db.models
+package com.calvo.carolina.repository.models
 
-
-data class ShopDAOModel(
+ // TODO("Añadir todos los campos de los idiomas")
+data class ShopEntity(
         val id: Long,
         val databaseID: Long,
         val name: String,

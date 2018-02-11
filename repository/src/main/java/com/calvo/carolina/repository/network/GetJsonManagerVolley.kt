@@ -6,11 +6,11 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.calvo.carolina.repository.ErrorClosure
-import com.calvo.carolina.repository.SuccessClosure
+import com.calvo.carolina.util.ErrorClosure
+import com.calvo.carolina.util.SuccessClosure
 import java.lang.ref.WeakReference
 
-class GetJsonManagerVolley(context: Context): GetJsonManager
+internal class GetJsonManagerVolley(context: Context): GetJsonManager
 {
     // Actividad -> (Strong) Interactor ->(Strong)  Repository ->(Strong)  Volley ->(Strong)  Activity-Context
     // Tenemos un ciclo de punteros strong y eso puede causar pérdida de memoria al no poder eliminarse la actividad cuando pulsamos atrás
@@ -20,7 +20,7 @@ class GetJsonManagerVolley(context: Context): GetJsonManager
           Volley.newRequestQueue(weakContext.get())
     }
 
-    override fun execute(url: String, success: SuccessClosure, error: ErrorClosure)
+    override fun execute(url: String, success: SuccessClosure<String>, error: ErrorClosure)
     {
        // Create request (success, failure)
         val request = StringRequest( url,
