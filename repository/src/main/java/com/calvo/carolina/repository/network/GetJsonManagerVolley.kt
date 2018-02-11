@@ -10,13 +10,12 @@ import com.calvo.carolina.util.ErrorClosure
 import com.calvo.carolina.util.SuccessClosure
 import java.lang.ref.WeakReference
 
-internal class GetJsonManagerVolley(context: Context): GetJsonManager
+internal class GetJsonManagerVolley(private val weakContext: WeakReference<Context>): GetJsonManager
 {
     // Actividad -> (Strong) Interactor ->(Strong)  Repository ->(Strong)  Volley ->(Strong)  Activity-Context
     // Tenemos un ciclo de punteros strong y eso puede causar pérdida de memoria al no poder eliminarse la actividad cuando pulsamos atrás
     // Entonces el puntero al contexto debe ser weak
-    var weakContext: WeakReference<Context> = WeakReference(context)
-    val requestQueue: RequestQueue by lazy {
+     val requestQueue: RequestQueue by lazy {
           Volley.newRequestQueue(weakContext.get())
     }
 

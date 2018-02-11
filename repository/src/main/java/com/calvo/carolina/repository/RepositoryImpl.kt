@@ -13,7 +13,7 @@ import com.calvo.carolina.util.CodeClosure
 import com.calvo.carolina.util.ErrorClosure
 import java.lang.ref.WeakReference
 
-class RepositoryImpl internal constructor(private val weakContext:  WeakReference<Context>, private val cache: Cache): Repository
+class RepositoryImpl internal constructor(private val weakContext:  WeakReference<Context>, private val cache: Cache, private val jsonManager: GetJsonManager): Repository
 {
 
     override fun getAllShops(success: (shops: List<ShopEntity>) -> Unit, error: ErrorClosure)
@@ -37,8 +37,7 @@ class RepositoryImpl internal constructor(private val weakContext:  WeakReferenc
     {
         Log.d("Shops", "Populate cache")
         // perform network request
-        val jsonManager: GetJsonManager = GetJsonManagerVolley(weakContext.get()!!)
-        jsonManager.execute(BuildConfig.MADRID_SHOPS_SERVER_URL,
+       jsonManager.execute(BuildConfig.MADRID_SHOPS_SERVER_URL,
                 { shopsJson: String ->
                     val parser = JsonEntitiesParser()
                     val shops = parser.parse<ListShopsJsonEntity>(shopsJson)

@@ -6,7 +6,7 @@ import com.calvo.carolina.business.mappers.map
 import com.calvo.carolina.business.model.Shops
 import com.calvo.carolina.repository.Repository
 import com.calvo.carolina.repository.models.ShopEntity
-import com.calvo.carolina.repository.util.RepositoryObjectInjector
+import com.calvo.carolina.repository.RepositoryObjectInjector
 import com.calvo.carolina.util.ErrorClosure
 import com.calvo.carolina.util.SuccessClosure
 import java.lang.ref.WeakReference

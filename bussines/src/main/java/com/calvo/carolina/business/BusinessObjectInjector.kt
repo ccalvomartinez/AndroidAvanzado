@@ -1,4 +1,4 @@
-package com.calvo.carolina.business.interactors
+package com.calvo.carolina.business
 
 import android.content.Context
 import com.calvo.carolina.business.interactors.clearallshops.DeleteAllShops
