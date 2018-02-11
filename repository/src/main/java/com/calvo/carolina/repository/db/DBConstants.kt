@@ -13,11 +13,13 @@ internal object DBConstants
 
     const val KEY_SHOP_ADDRESS = "ADDRESS"
     const val KEY_SHOP_URL = "URL"
-    const val KEY_SHOP_DESCRIPTION = "DESCRIPTION"
+    const val KEY_SHOP_DESCRIPTION_ES = "DESCRIPTION_ES"
+    const val KEY_SHOP_DESCRIPTION_EN = "DESCRIPTION_EN"
 
     const val KEY_SHOP_LATITUDE = "LATITUDE"
     const val KEY_SHOP_LONGITUDE = "LONGITUDE"
-    const val KEY_SHOP_OPENING_HOURS = "OPENING_HOURS"
+    const val KEY_SHOP_OPENING_HOURS_ES = "OPENING_HOURS_ES"
+    const val KEY_SHOP_OPENING_HOURS_EN = "OPENING_HOURS_EN"
 
     val ALL_COLUMNS = arrayOf(
             KEY_SHOP_DATABASE_ID,
@@ -27,10 +29,12 @@ internal object DBConstants
             KEY_SHOP_LOGO_IMAGE_URL,
             KEY_SHOP_ADDRESS,
             KEY_SHOP_URL,
-            KEY_SHOP_DESCRIPTION,
+            KEY_SHOP_DESCRIPTION_ES,
+            KEY_SHOP_DESCRIPTION_EN,
             KEY_SHOP_LATITUDE,
             KEY_SHOP_LONGITUDE,
-            KEY_SHOP_OPENING_HOURS)
+            KEY_SHOP_OPENING_HOURS_ES,
+            KEY_SHOP_OPENING_HOURS_EN)
 
     private val SQL_SCRIPT_CREATE_SHOP_TABLE = (
             "create table " + TABLE_SHOP
@@ -44,8 +48,10 @@ internal object DBConstants
                     + KEY_SHOP_URL + " text,"
                     + KEY_SHOP_LATITUDE + " real,"
                     + KEY_SHOP_LONGITUDE + " real, "
-                    + KEY_SHOP_DESCRIPTION + " text, "
-                    + KEY_SHOP_OPENING_HOURS + " text "
+                    + KEY_SHOP_DESCRIPTION_ES + " text, "
+                    + KEY_SHOP_DESCRIPTION_EN + " text, "
+                    + KEY_SHOP_OPENING_HOURS_ES + " text, "
+                    + KEY_SHOP_OPENING_HOURS_EN + " text "
                     + ");")
 
     val DROP_DATABASE_SCRIPTS = ""

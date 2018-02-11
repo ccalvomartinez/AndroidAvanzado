@@ -21,6 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import java.util.*
 
 class ListActivity : AppCompatActivity()
 {
@@ -41,15 +42,22 @@ class ListActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
-
+        updateActionBarTitle()
         setupList()
         Log.d("MadridShops", "onCreate ListActivity")
+    }
+    // TODO("Poner tiendas o actividades dependiento de quien me llame")
+    private fun updateActionBarTitle()
+    {
+       supportActionBar?.title = getString(R.string.shops)
     }
 
     private fun setupList()
     {
         val getAllShopsInteractor = BusinessObjectInjector(this).BuildGetAllShopsInteractor()
+
         getAllShopsInteractor.execute(
+                Locale.getDefault().language == "es",
                 success =
                 { shops: Shops ->
                     listFragment.setShops(shops)
@@ -64,6 +72,7 @@ class ListActivity : AppCompatActivity()
         Log.d("Shops", "setupMap")
         val getAllShopsInteractor = BusinessObjectInjector(this).BuildGetAllShopsInteractor()
         getAllShopsInteractor.execute(
+                Locale.getDefault().language == "es",
                 success =
                 { shops: Shops ->
                     Log.d("Shops", "Success")
@@ -71,7 +80,7 @@ class ListActivity : AppCompatActivity()
                             {map ->
                                 Log.d("Shops", "Hablemu mapa")
                                 centerMapInPosition(map, 40.416775,-3.703790)
-                                map.uiSettings.isRotateGesturesEnabled = false;
+                                map.uiSettings.isRotateGesturesEnabled = false
                                 showUserPosition(baseContext, map)
                                 addAllPins(map, shops)
                             })
@@ -103,7 +112,7 @@ class ListActivity : AppCompatActivity()
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),10)
             return
         }
-        map.isMyLocationEnabled = true;
+        map.isMyLocationEnabled = true
 
     }
     // Cuando pido permisos llego aquí
@@ -125,7 +134,7 @@ class ListActivity : AppCompatActivity()
     {
         (0 until shops.count())
                 .map { shops.get(it) }
-                .forEach { addPin(map, it.latitude, it.logitude, it.name) }
+                .forEach { addPin(map, it.latitude, it.longitude, it.name) }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean
     {

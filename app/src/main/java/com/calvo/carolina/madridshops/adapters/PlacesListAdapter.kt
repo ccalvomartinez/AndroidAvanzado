@@ -42,7 +42,7 @@ class PlacesListAdapter(private val shops: Shops): RecyclerView.Adapter<PlacesLi
         {
             // TODO("Mostrar imagen y horario de apertura")
             itemView.cell_list_name.text = shop.name
-
+            itemView.cell_list_opening.text = shop.openingHours
             itemView.setOnClickListener { listener?.onPlaceSelected(shop) }
         }
     }

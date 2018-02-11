@@ -7,5 +7,5 @@ import com.calvo.carolina.util.SuccessClosure
 
 interface GetAllShopsInteractor
 {
-    fun execute(success: SuccessClosure<Shops>, error: ErrorClosure)
+    fun execute(isSpanish: Boolean, success: SuccessClosure<Shops>, error: ErrorClosure)
 }

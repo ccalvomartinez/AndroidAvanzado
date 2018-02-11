@@ -36,7 +36,7 @@ class GetJsonManagerVolleyTest
                     assertTrue(json.isNotEmpty())
                 },
                 { errorMessage ->
-                    assertTrue(false)
+                    assertTrue(errorMessage,false)
                 })
     }
 

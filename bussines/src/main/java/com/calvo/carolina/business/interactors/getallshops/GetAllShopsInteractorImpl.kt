@@ -11,15 +11,15 @@ import com.calvo.carolina.util.ErrorClosure
 import com.calvo.carolina.util.SuccessClosure
 import java.lang.ref.WeakReference
 
-internal class GetAllShopsInteractorImpl(private val weakContext: WeakReference<Context>): GetAllShopsInteractor
+internal class GetAllShopsInteractorImpl(weakContext: WeakReference<Context>): GetAllShopsInteractor
 {
     private val repository: Repository =  RepositoryObjectInjector(weakContext).BuildRepository()
-    // TODO("Añadir idioma")
-    override fun execute(success: SuccessClosure<Shops>, error: ErrorClosure)
+
+    override fun execute(isSpanish: Boolean, success: SuccessClosure<Shops>, error: ErrorClosure)
     {
        repository.getAllShops(
                success = {shopEntityList: List<ShopEntity> ->
-                   val shops = Shops(shopEntityList.map { it.map() }.toMutableList())
+                   val shops = Shops(shopEntityList.map { it.map(isSpanish) }.toMutableList())
                    success(shops)
                },
                error = {

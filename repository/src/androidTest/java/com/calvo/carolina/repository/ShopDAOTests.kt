@@ -32,7 +32,7 @@ class ShopDAOTests
     fun testInsert_given_valid_shop_it_gets_inserted()
     {
         // Arrange
-        val shop = ShopEntity(1, 1, "MyShop", "", 1.0F, 2.0F, "", "", "", "")
+        val shop = ShopEntity(1, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
         val shopDAO =objectInjector.BuildShopDAO()
 
         // Act
@@ -47,7 +47,8 @@ class ShopDAOTests
     fun testDeleteAll_given_rows_in_database_returns_true()
     {
         // Arrange
-        val shop = ShopEntity(1, 1, "MyShop", "", 1.0F, 2.0F, "", "", "", "")
+        val shop = ShopEntity(1, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
+
         val shopDAO = objectInjector.BuildShopDAO()
 
         val id = shopDAO.insert(shop)
@@ -81,8 +82,8 @@ class ShopDAOTests
     fun testInsert_given_two_rows_inserted_ignore_databaseID()
     {
         // Arrange
-        val shop = ShopEntity(1, 1, "MyShop", "", 1.0F, 2.0F, "", "", "", "")
-        val shop2 = ShopEntity(2, 1, "MyShop2", "", 1.0F, 2.0F, "", "", "", "")
+        val shop = ShopEntity(1, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
+        val shop2 = ShopEntity(2, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
         val shopDAO = objectInjector.BuildShopDAO()
 
         // Act
@@ -100,8 +101,9 @@ class ShopDAOTests
         // Arrange
         val shopDAO = objectInjector.BuildShopDAO()
         shopDAO.deleteAll()
-        val shop = ShopEntity(1, 1, "MyShop", "", 1.0F, 2.0F, "", "", "", "")
-        val shop2 = ShopEntity(2, 1, "MyShop2", "", 1.0F, 2.0F, "", "", "", "")
+        val shop = ShopEntity(1, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
+        val shop2 = ShopEntity(1, 2, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
+
         shopDAO.insert(shop)
         shopDAO.insert(shop2)
 
@@ -118,7 +120,8 @@ class ShopDAOTests
         // Arrange
         val shopDAO = objectInjector.BuildShopDAO()
         shopDAO.deleteAll()
-        val shop = ShopEntity(1, 1, "MyShop", "", 1.0F, 2.0F, "", "", "", "")
+        val shop = ShopEntity(1, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
+
         val databaseID = shopDAO.insert(shop)
 
         // Act
@@ -153,10 +156,12 @@ class ShopDAOTests
         // Arrange
         val shopDAO = objectInjector.BuildShopDAO()
         shopDAO.deleteAll()
-        val shop = ShopEntity(1, 1, "MyShop", "", 1.0F, 2.0F, "", "", "", "")
+        val shop = ShopEntity(1, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
+
         val databaseID = shopDAO.insert(shop)
 
-        val shop2 = ShopEntity(2, 1, "MyShop2", "", 2.0F, 2.0F, "", "", "", "")
+        val shop2 = ShopEntity(2, 1, "MyShop2", "", "",2.0F, 2.0F, "", "", "", "","")
+
         // Act
         val numberOfRegistersAffected = shopDAO.update(databaseID, shop2)
         val registerUpdated = shopDAO.query(databaseID)

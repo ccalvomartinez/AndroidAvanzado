@@ -11,7 +11,7 @@ class GetAllShopsInteractorFake: GetAllShopsInteractor
 
 
     // Metodo "Kotlinero" de hacer las cosas
-    override fun execute(success: SuccessClosure<Shops>, error: ErrorClosure) {
+    override fun execute(isSpanish: Boolean, success: SuccessClosure<Shops>, error: ErrorClosure) {
         val allOk = true
 
         if (allOk) {
@@ -23,7 +23,7 @@ class GetAllShopsInteractorFake: GetAllShopsInteractor
     private fun createListOfShops(): Shops {
         val list = ArrayList<Shop>()
         for (i in 0..100) {
-            val shop = Shop(i, "Shop" + i, "Address " + i, 2.0, 2.0)
+            val shop = Shop(i, "Shop" + i, "Address " + i,"","", 2.0, 2.0, "", "")
             list.add(shop)
         }
         return Shops(list)

@@ -12,11 +12,13 @@ internal fun ShopJsonModel.map(): ShopEntity
             -1,
             this.name,
             this.description_es,
+            this.description_en,
             gps_lat,
             gps_lon,
             this.img,
             this.logo_img,
             this.opening_hours_es,
+            this.opening_hours_en,
             this.address
     )
 }

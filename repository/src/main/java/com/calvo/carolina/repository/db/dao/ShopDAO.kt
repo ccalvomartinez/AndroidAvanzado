@@ -8,7 +8,7 @@ import com.calvo.carolina.repository.db.DBHelper
 import com.calvo.carolina.repository.models.ShopEntity
 
 // Inyectamos la dependencia de DBHelper
-class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity>
+class ShopDAO(dbHelper: DBHelper): DAOPersistable<ShopEntity>
 {
     // Conexiones de lectura y escritura a la base de datos
     private val dbReadOnlyConnection: SQLiteDatabase = dbHelper.readableDatabase
@@ -26,13 +26,15 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity>
 
         content.put(DBConstants.KEY_SHOP_ID_JSON, shopEntity.id)
         content.put(DBConstants.KEY_SHOP_NAME, shopEntity.name)
-        content.put(DBConstants.KEY_SHOP_DESCRIPTION, shopEntity.description)
+        content.put(DBConstants.KEY_SHOP_DESCRIPTION_ES, shopEntity.description_es)
+        content.put(DBConstants.KEY_SHOP_DESCRIPTION_EN, shopEntity.description_en)
         content.put(DBConstants.KEY_SHOP_LATITUDE, shopEntity.latitude)
         content.put(DBConstants.KEY_SHOP_LONGITUDE, shopEntity.longitude)
         content.put(DBConstants.KEY_SHOP_IMAGE_URL, shopEntity.image)
         content.put(DBConstants.KEY_SHOP_LOGO_IMAGE_URL, shopEntity.logo)
         content.put(DBConstants.KEY_SHOP_ADDRESS, shopEntity.address)
-        content.put(DBConstants.KEY_SHOP_OPENING_HOURS, shopEntity.openingHours)
+        content.put(DBConstants.KEY_SHOP_OPENING_HOURS_ES, shopEntity.openingHours_es)
+        content.put(DBConstants.KEY_SHOP_OPENING_HOURS_EN, shopEntity.openingHours_en)
 
         return content
     }
@@ -114,12 +116,14 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity>
                 cursor.getLong(cursor.getColumnIndex(DBConstants.KEY_SHOP_ID_JSON)),
                 cursor.getLong(cursor.getColumnIndex(DBConstants.KEY_SHOP_DATABASE_ID)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_NAME)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_DESCRIPTION)),
+                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_DESCRIPTION_ES)),
+                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_DESCRIPTION_EN)),
                 cursor.getFloat(cursor.getColumnIndex(DBConstants.KEY_SHOP_LATITUDE)),
                 cursor.getFloat(cursor.getColumnIndex(DBConstants.KEY_SHOP_LONGITUDE)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_IMAGE_URL)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_LOGO_IMAGE_URL)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_OPENING_HOURS)),
+                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_OPENING_HOURS_ES)),
+                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_OPENING_HOURS_EN)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_ADDRESS))
         )
     }
