@@ -2,7 +2,7 @@ package com.calvo.carolina.business.interactors.clearallshops
 
 import android.content.Context
 import com.calvo.carolina.repository.Repository
-import com.calvo.carolina.repository.util.RepositoryObjectInjector
+import com.calvo.carolina.repository.RepositoryObjectInjector
 import com.calvo.carolina.util.CodeClosure
 import com.calvo.carolina.util.ErrorClosure
 import java.lang.ref.WeakReference

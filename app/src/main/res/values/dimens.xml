@@ -1,3 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="cell_padding">10dp</dimen>
+    <dimen name="info_window_image_size">64dp</dimen>
+    <dimen name="cell_image_size">64dp</dimen>
 </resources>

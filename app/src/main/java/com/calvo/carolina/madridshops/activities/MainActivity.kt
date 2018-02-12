@@ -1,5 +1,6 @@
 package com.calvo.carolina.madridshops.activities
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity()
         val addDishButton  = findViewById<View>(R.id.go_shops)
         addDishButton.setOnClickListener { _ ->
             startActivity(ListActivity.intent(this))
+
         }
     }
 }

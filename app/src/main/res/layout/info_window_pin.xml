@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:ignore="UseCompoundDrawables">
 
+    <ImageView
+        android:id="@+id/info_window_image"
+        android:layout_width="@dimen/info_window_image_size"
+        android:layout_height="@dimen/info_window_image_size"
+        tools:contentDescription="Nombre de la tienda" />
     <TextView
         android:id="@+id/info_window_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/cell_padding"
         tools:text="Nombre de la tienda" />
-    <TextView
-        android:id="@+id/info_window_title2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Nombre de la tienda" />
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="Nombre de la tienda" />
+
 </LinearLayout>

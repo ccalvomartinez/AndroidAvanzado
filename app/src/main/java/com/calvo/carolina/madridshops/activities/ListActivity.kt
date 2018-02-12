@@ -93,12 +93,14 @@ class ListActivity : AppCompatActivity()
     {
         map.uiSettings.isRotateGesturesEnabled = false
         map.uiSettings.isZoomControlsEnabled = true
-        map.setOnInfoWindowClickListener { marker: Marker? ->
-            // TODO("Sacar esto a una función")
-            Log.d("Shops", "Shops marker" + marker?.tag.toString())
-            // TODO("Navegar al detalle")
-        }
+        map.setOnInfoWindowClickListener{navigateToDetail(it)}
         map.setInfoWindowAdapter(PlaceInfoWindowAdapter(baseContext))
+    }
+
+    private fun navigateToDetail(marker: Marker?)
+    {
+        Log.d("Shops", "Shops marker" + marker?.tag.toString())
+        // TODO("Navegar al detalle")
     }
     private fun initializeMap(mapFragment: SupportMapFragment, afterGet: (map: GoogleMap) -> Unit) {
         mapFragment.getMapAsync(afterGet)

@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-<TextView
-    android:id="@+id/cell_list_name"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    />
-    <TextView
-        android:id="@+id/cell_list_opening"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/cell_list_image"
+        android:layout_width="@dimen/cell_image_size"
+        android:layout_height="@dimen/cell_image_size"
+        tools:background="@color/colorAccent"
+        android:contentDescription="@string/shops" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:padding="@dimen/cell_padding"
+        android:orientation="vertical"
+       >
+
+        <TextView
+            android:id="@+id/cell_list_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="Tienda 1" />
+
+        <TextView
+            android:id="@+id/cell_list_opening"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="Horario de apertura" />
+    </LinearLayout>
 </LinearLayout>

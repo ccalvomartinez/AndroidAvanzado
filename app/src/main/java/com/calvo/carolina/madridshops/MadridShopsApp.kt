@@ -1,12 +1,9 @@
 package com.calvo.carolina.madridshops
 
-
-import android.content.res.Configuration
-import com.calvo.carolina.business.model.*
 import android.support.multidex.MultiDexApplication
 import android.util.Log
-import com.calvo.carolina.business.interactors.BusinessObjectInjector
-import java.util.*
+import com.calvo.carolina.business.BusinessObjectInjector
+import com.squareup.picasso.Picasso
 
 
 class MadridShopsApp: MultiDexApplication()
@@ -18,7 +15,8 @@ class MadridShopsApp: MultiDexApplication()
         // Es el lugar adecuado para inicializar los elementos necesarios para el funcionamiento de la aplicación
         super.onCreate()
         Log.d("MadridShops", "onCreate")
-
+        Picasso.with(this).setIndicatorsEnabled(true)
+        Picasso.with(this).isLoggingEnabled = true
     }
     override fun onLowMemory()
     {

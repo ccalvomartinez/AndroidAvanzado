@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.calvo.carolina.business.model.Shop
 import com.calvo.carolina.business.model.Shops
 import com.calvo.carolina.madridshops.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cell_places_list.view.*
 
 
@@ -40,9 +41,13 @@ class PlacesListAdapter(private val shops: Shops): RecyclerView.Adapter<PlacesLi
     {
         fun bindShop(shop: Shop)
         {
-            // TODO("Mostrar imagen y horario de apertura")
+
             itemView.cell_list_name.text = shop.name
             itemView.cell_list_opening.text = shop.openingHours
+            Picasso.with(itemView.context)
+                    .load(shop.logo)
+                    .placeholder(R.drawable.tienda_ico)
+                    .into(itemView.cell_list_image)
             itemView.setOnClickListener { listener?.onPlaceSelected(shop) }
         }
     }
