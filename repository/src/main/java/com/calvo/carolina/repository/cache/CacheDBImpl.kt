@@ -4,11 +4,10 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.calvo.carolina.util.CodeClosure
-import com.calvo.carolina.util.ErrorClosure
 import com.calvo.carolina.repository.db.dao.DAOPersistable
 import com.calvo.carolina.repository.models.ShopEntity
-import com.calvo.carolina.util.dispatchOnMainThread
+import com.calvo.carolina.util.CodeClosure
+import com.calvo.carolina.util.ErrorClosure
 import java.lang.ref.WeakReference
 
 internal class CacheDBImpl(val weakContext: WeakReference<Context>, val shopDAO: DAOPersistable<ShopEntity>) : Cache
@@ -32,6 +31,7 @@ internal class CacheDBImpl(val weakContext: WeakReference<Context>, val shopDAO:
                 Log.d("Shops", "Cache List empty")
                 dispatchOnMainThread(Runnable {error("No shops")})
             }
+
         }).run()
     }
 
@@ -43,8 +43,9 @@ internal class CacheDBImpl(val weakContext: WeakReference<Context>, val shopDAO:
             {
                 Log.d("Shops", "Save shops")
 
-                shops.forEach { shopDAO.insert(it) }
+                shopDAO.insert(shops)
                 dispatchOnMainThread(Runnable(success))
+
             } catch (e: Exception)
             {
                 Log.d("Shops", "Error saving: " + e.localizedMessage)
@@ -67,6 +68,7 @@ internal class CacheDBImpl(val weakContext: WeakReference<Context>, val shopDAO:
             {
                 dispatchOnMainThread(Runnable {error("Error deleting")})
             }
+
         }).run()
     }
 

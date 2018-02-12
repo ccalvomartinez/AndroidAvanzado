@@ -2,6 +2,7 @@ package com.calvo.carolina.repository.db
 
 internal object DBConstants
 {
+    const val INVALID_ID: Long = -1
     val TABLE_SHOP = "SHOP"
 
     // Table field constants

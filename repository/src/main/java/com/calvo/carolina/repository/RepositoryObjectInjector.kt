@@ -1,8 +1,6 @@
 package com.calvo.carolina.repository
 
 import android.content.Context
-import com.calvo.carolina.repository.Repository
-import com.calvo.carolina.repository.RepositoryImpl
 import com.calvo.carolina.repository.cache.Cache
 import com.calvo.carolina.repository.cache.CacheDBImpl
 import com.calvo.carolina.repository.db.DBHelper
@@ -26,7 +24,7 @@ class RepositoryObjectInjector(private val weakContext:  WeakReference<Context>)
 
     internal fun BuildDAOPersistable(): DAOPersistable<ShopEntity>
     {
-        return ShopDAO(BuildDBHelper("MadridShops.sqlite", 1))
+        return ShopDAO(weakContext, "MadridShops.sqlite", 1)
     }
 
     internal fun BuildDBHelper(name: String, version: Int): DBHelper {
