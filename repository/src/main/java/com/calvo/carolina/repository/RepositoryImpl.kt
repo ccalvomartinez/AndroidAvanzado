@@ -2,11 +2,10 @@ package com.calvo.carolina.repository
 
 import android.content.Context
 import android.util.Log
-import com.calvo.carolina.repository.cache.*
+import com.calvo.carolina.repository.cache.Cache
 import com.calvo.carolina.repository.mappers.map
 import com.calvo.carolina.repository.models.ShopEntity
 import com.calvo.carolina.repository.network.GetJsonManager
-import com.calvo.carolina.repository.network.GetJsonManagerVolley
 import com.calvo.carolina.repository.network.json.JsonEntitiesParser
 import com.calvo.carolina.repository.network.json.model.ListShopsJsonEntity
 import com.calvo.carolina.util.CodeClosure

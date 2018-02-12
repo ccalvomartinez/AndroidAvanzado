@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.cell_places_list.view.*
 
 class PlacesListAdapter(private val shops: Shops): RecyclerView.Adapter<PlacesListAdapter.PlaceViewHolder>()
 {
-    var listener: OnPlaceSelectedListener? = null
+    var listener: OnRowClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): PlaceViewHolder
     {
@@ -52,7 +52,7 @@ class PlacesListAdapter(private val shops: Shops): RecyclerView.Adapter<PlacesLi
         }
     }
 
-    interface OnPlaceSelectedListener
+    interface OnRowClickListener
     {
         fun onPlaceSelected(shop: Shop)
     }

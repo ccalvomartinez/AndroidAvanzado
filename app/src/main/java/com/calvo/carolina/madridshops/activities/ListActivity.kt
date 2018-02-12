@@ -1,32 +1,29 @@
 package com.calvo.carolina.madridshops.activities
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.calvo.carolina.business.BusinessObjectInjector
+import com.calvo.carolina.business.model.Shop
 import com.calvo.carolina.business.model.Shops
 import com.calvo.carolina.madridshops.R
 import com.calvo.carolina.madridshops.adapters.PlaceInfoWindowAdapter
 import com.calvo.carolina.madridshops.fragments.ListFragment
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.calvo.carolina.madridshops.fragments.OnPlaceSelectedListener
+import com.calvo.carolina.util.GoogleMapsUtil
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import java.util.*
 
-class ListActivity : AppCompatActivity()
+class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
 {
+
 
 
     companion object
@@ -75,15 +72,20 @@ class ListActivity : AppCompatActivity()
         listFragment.setShops(shops)
     }
 
+    override fun onPlaceSelected(shop: Shop)
+    {
+        navigateToDetail(shop)
+    }
+
     private fun setupMap(shops: Shops)
     {
-        initializeMap(supportFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment,
+        GoogleMapsUtil.initializeMap(supportFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment,
                 { map ->
                     Log.d("Shops", "Hablemu mapa")
                     googleMap = map
-                    centerMapInPosition(map, 40.416775, -3.703790)
+                    GoogleMapsUtil.centerMapInPosition(map, 40.416775, -3.703790)
                     setMapSettings(map)
-                    showUserPosition(baseContext, map)
+                    GoogleMapsUtil.showUserPosition(baseContext, map, this)
                     addAllPins(map, shops)
                 })
     }
@@ -95,39 +97,22 @@ class ListActivity : AppCompatActivity()
     {
         map.uiSettings.isRotateGesturesEnabled = false
         map.uiSettings.isZoomControlsEnabled = true
-        map.setOnInfoWindowClickListener{navigateToDetail(it)}
+        map.setOnInfoWindowClickListener{
+            if (it != null){
+                navigateToDetail(it.tag as Shop)
+            }
+        }
         map.setInfoWindowAdapter(PlaceInfoWindowAdapter(baseContext))
     }
 
-    private fun navigateToDetail(marker: Marker?)
+    private fun navigateToDetail(shop: Shop)
     {
-        Log.d("Shops", "Shops marker" + marker?.tag.toString())
-        // TODO("Navegar al detalle")
-    }
-    private fun initializeMap(mapFragment: SupportMapFragment, afterGet: (map: GoogleMap) -> Unit) {
-        mapFragment.getMapAsync(afterGet)
-    }
 
-    fun centerMapInPosition(map: GoogleMap, latitude: Double, longitude: Double)
-    {
-        val cameraposition = CameraPosition.builder().target(LatLng(latitude, longitude)).zoom(12f).build()
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraposition))
-    }
-
-
-    private fun showUserPosition(context: Context, map: GoogleMap)
-    {
-        if (ActivityCompat.checkSelfPermission(context,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(context,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        {
-            map.isMyLocationEnabled = true
-        } else
-        {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),10)
-        }
-
+        startActivity(DetailActivity.intent(this, shop))
 
     }
+
+
 
 
     // Cuando pido permisos llego aquí
@@ -138,29 +123,19 @@ class ListActivity : AppCompatActivity()
         {
             if(grantResults.any { it == PackageManager.PERMISSION_GRANTED })
             {
-                try
-                {
-                    googleMap.isMyLocationEnabled = true
-
-                } catch (ex: SecurityException)
-                {
-                    Log.d("Shops", ex.localizedMessage)
-                }
+                GoogleMapsUtil.showUserPosition(baseContext, googleMap, this)
             }
         }
     }
 
-    fun addPin(map: GoogleMap, latitude: Double, longitude: Double, title: String): Marker
-    {
-        return map.addMarker(MarkerOptions().position(LatLng(latitude, longitude)).title(title))
-    }
+
 
     fun addAllPins(map: GoogleMap, shops: Shops)
     {
         (0 until shops.count())
                 .map { shops.get(it) }
                 .forEach {
-                    val marker = addPin(map, it.latitude, it.longitude, it.name)
+                    val marker = GoogleMapsUtil.addPin(map, it.latitude, it.longitude, it.name)
                     marker.tag = it
                 }
     }

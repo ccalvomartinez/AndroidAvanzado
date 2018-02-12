@@ -53,7 +53,8 @@
         <activity
             android:name=".activities.ListActivity"
             android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".activities.DetailActivity"></activity>
+        <activity android:name=".activities.DetailActivity"
+            android:parentActivityName=".activities.ListActivity" />
     </application>
 
 </manifest>

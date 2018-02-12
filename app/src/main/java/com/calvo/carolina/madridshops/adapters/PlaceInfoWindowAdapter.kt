@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import com.calvo.carolina.business.model.Shop
 import com.calvo.carolina.madridshops.R
@@ -25,7 +24,6 @@ class PlaceInfoWindowAdapter(private val context: Context) : GoogleMap.InfoWindo
         placeView.findViewById<TextView>(R.id.info_window_title).text = marker?.title
         if (marker != null){
             val shop = marker.tag as Shop
-            val imageView = placeView.findViewById<ImageView>(R.id.info_window_image)
             val isImageLoaded = markersAlreadyLoaded[marker.id] ?: false
             if (isImageLoaded)
             {
@@ -56,7 +54,7 @@ class MarkerCallback(val marker: Marker): Callback {
 
     override fun onSuccess()
     {
-        marker.showInfoWindow();
+        marker.showInfoWindow()
     }
 
     override fun onError()

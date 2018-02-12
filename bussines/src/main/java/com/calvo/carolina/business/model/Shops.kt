@@ -1,5 +1,6 @@
 package com.calvo.carolina.business.model
 
+import java.io.Serializable
 import java.util.*
 
 data class Shop(val id: Int,
@@ -10,7 +11,7 @@ data class Shop(val id: Int,
                 val latitude: Double,
                 val longitude: Double,
                 val image: String,
-                val logo: String) {
+                val logo: String): Serializable {
 
     init
     {

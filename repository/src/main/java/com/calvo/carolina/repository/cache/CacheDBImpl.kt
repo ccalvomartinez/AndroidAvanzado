@@ -1,13 +1,12 @@
 package com.calvo.carolina.repository.cache
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import com.calvo.carolina.repository.db.dao.DAOPersistable
 import com.calvo.carolina.repository.models.ShopEntity
 import com.calvo.carolina.util.CodeClosure
 import com.calvo.carolina.util.ErrorClosure
+import com.calvo.carolina.util.dispatchOnMainThread
 import java.lang.ref.WeakReference
 
 internal class CacheDBImpl(val weakContext: WeakReference<Context>, val shopDAO: DAOPersistable<ShopEntity>) : Cache
@@ -24,12 +23,12 @@ internal class CacheDBImpl(val weakContext: WeakReference<Context>, val shopDAO:
             if (shopList.isNotEmpty())
             {
                 Log.d("Shops", "Cache List from database")
-                dispatchOnMainThread(Runnable{success(shopList)})
+                dispatchOnMainThread(Runnable { success(shopList) })
             }
             else
             {
                 Log.d("Shops", "Cache List empty")
-                dispatchOnMainThread(Runnable {error("No shops")})
+                dispatchOnMainThread(Runnable { error("No shops") })
             }
 
         }).run()
@@ -49,7 +48,7 @@ internal class CacheDBImpl(val weakContext: WeakReference<Context>, val shopDAO:
             } catch (e: Exception)
             {
                 Log.d("Shops", "Error saving: " + e.localizedMessage)
-                dispatchOnMainThread(Runnable {error(e.localizedMessage)})
+                dispatchOnMainThread(Runnable { error(e.localizedMessage) })
             }
         }).run()
     }
@@ -66,15 +65,11 @@ internal class CacheDBImpl(val weakContext: WeakReference<Context>, val shopDAO:
             }
             else
             {
-                dispatchOnMainThread(Runnable {error("Error deleting")})
+                dispatchOnMainThread(Runnable { error("Error deleting") })
             }
 
         }).run()
     }
 
-    fun dispatchOnMainThread(runnable: Runnable)
-    {
-        val uiHandler = Handler(Looper.getMainLooper())
-        uiHandler.post(runnable)
-    }
+
 }

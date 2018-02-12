@@ -1,29 +1,42 @@
 package com.calvo.carolina.madridshops.activities
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import com.calvo.carolina.business.model.Shop
 import com.calvo.carolina.madridshops.R
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
+
 
 class DetailActivity : AppCompatActivity()
 {
+    companion object
+    {
+        const val DETAIL_SHOP = "DETAIL_SHOP"
+        fun intent(context: Context, shop: Shop): Intent
+        {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra(DETAIL_SHOP, shop)
+            return intent
+        }
+    }
 
+    val shop by lazy {
+        intent.getSerializableExtra(DETAIL_SHOP) as Shop
+    }
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        Picasso.with(this)
-                .load("http://78.media.tumblr.com/tumblr_ktna2fMosM1qa02x4o1_400.jpg")
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(img1)
-        Picasso.with(this)
-                .load("https://misanimales.com/wp-content/uploads/2016/10/crecen-los-gatos.jpg")
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(img2)
-        Picasso.with(this)
-                .load("https://misanimales.com/wp-content/uploads/2016/10/cara-de-un-perro.jpg")
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(img3)
+        renderView()
+    }
+
+    private fun renderView()
+    {
+        detail_description.text = shop.description
+        detail_address.text = shop.address
+        detail_opening.text = shop.openingHours
+
     }
 }
