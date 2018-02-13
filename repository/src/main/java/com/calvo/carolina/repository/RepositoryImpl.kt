@@ -1,6 +1,5 @@
 package com.calvo.carolina.repository
 
-import android.content.Context
 import android.util.Log
 import com.calvo.carolina.repository.cache.Cache
 import com.calvo.carolina.repository.mappers.map
@@ -10,9 +9,8 @@ import com.calvo.carolina.repository.network.json.JsonEntitiesParser
 import com.calvo.carolina.repository.network.json.model.ListShopsJsonEntity
 import com.calvo.carolina.util.CodeClosure
 import com.calvo.carolina.util.ErrorClosure
-import java.lang.ref.WeakReference
 
-class RepositoryImpl internal constructor(private val weakContext:  WeakReference<Context>, private val cache: Cache, private val jsonManager: GetJsonManager): Repository
+class RepositoryImpl internal constructor(private val cache: Cache, private val jsonManager: GetJsonManager): Repository
 {
 
     override fun getAllShops(success: (shops: List<ShopEntity>) -> Unit, error: ErrorClosure)

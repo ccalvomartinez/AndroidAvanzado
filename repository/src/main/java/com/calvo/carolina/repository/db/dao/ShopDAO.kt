@@ -10,37 +10,12 @@ import com.calvo.carolina.repository.models.ShopEntity
 import java.lang.ref.WeakReference
 
 // Inyectamos la dependencia de DBHelper
-class ShopDAO(private val weakContext: WeakReference<Context>, private val name: String, private val version: Int) : DAOPersistable<ShopEntity>
+class ShopDAO(weakContext: WeakReference<Context>, name: String, version: Int) : DAOPersistable<ShopEntity>
 {
-      // Conexiones de lectura y escritura a la base de datos
     private var dbHelper = DBHelper(weakContext.get()!!, name, null, version)
-    private val dbReadOnlyConnection: SQLiteDatabase = dbHelper.readableDatabase
-    get()
-    {
-        if (field.isOpen)
-        {
-            return field
-        } else
-        {
-            dbHelper.close()
-            dbHelper = DBHelper(weakContext.get()!!, name, null, version)
-            return dbHelper.readableDatabase
-        }
-    }
 
+    private val dbReadOnlyConnection: SQLiteDatabase = dbHelper.readableDatabase
     private val dbReadWriteConnection: SQLiteDatabase = dbHelper.writableDatabase
-        get()
-        {
-            if (field.isOpen)
-            {
-                return field
-            } else
-            {
-                dbHelper.close()
-                dbHelper = DBHelper(weakContext.get()!!, name, null, version)
-                return dbHelper.writableDatabase
-            }
-        }
 
     override fun insert(element: ShopEntity): Long
     {
@@ -55,7 +30,6 @@ class ShopDAO(private val weakContext: WeakReference<Context>, private val name:
         finally
         {
             dbReadWriteConnection.endTransaction()
-
         }
         return id
     }
@@ -84,12 +58,11 @@ class ShopDAO(private val weakContext: WeakReference<Context>, private val name:
         finally
         {
             dbReadWriteConnection.endTransaction()
-
         }
         return isSuccessfulInsert
     }
 
-    fun contentValues(shopEntity: ShopEntity): ContentValues
+    private fun contentValues(shopEntity: ShopEntity): ContentValues
     {
         val content = ContentValues()
 
@@ -159,7 +132,6 @@ class ShopDAO(private val weakContext: WeakReference<Context>, private val name:
         finally
         {
             dbReadWriteConnection.endTransaction()
-
         }
         return registersAffected
     }
@@ -181,7 +153,6 @@ class ShopDAO(private val weakContext: WeakReference<Context>, private val name:
         finally
         {
             dbReadWriteConnection.endTransaction()
-
         }
         return successfulDelete
     }
@@ -222,7 +193,6 @@ class ShopDAO(private val weakContext: WeakReference<Context>, private val name:
             queryResult.add(entityFromCursor(cursor)!!)
         }
 
-
         return queryResult
     }
 
@@ -250,7 +220,7 @@ class ShopDAO(private val weakContext: WeakReference<Context>, private val name:
 
     override fun queryCursor(databaseID: Long): Cursor
     {
-        val cursor = dbReadOnlyConnection.query(
+        return dbReadOnlyConnection.query(
                 DBConstants.TABLE_SHOP,
                 DBConstants.ALL_COLUMNS,
                 DBConstants.KEY_SHOP_DATABASE_ID + " = ?",
@@ -259,7 +229,5 @@ class ShopDAO(private val weakContext: WeakReference<Context>, private val name:
                 "",
                 DBConstants.KEY_SHOP_DATABASE_ID
         )
-
-        return cursor
     }
 }

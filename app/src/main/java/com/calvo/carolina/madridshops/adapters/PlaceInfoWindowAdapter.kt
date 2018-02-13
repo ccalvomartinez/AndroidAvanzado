@@ -25,6 +25,7 @@ class PlaceInfoWindowAdapter(private val context: Context) : GoogleMap.InfoWindo
         if (marker != null){
             val shop = marker.tag as Shop
             val isImageLoaded = markersAlreadyLoaded[marker.id] ?: false
+            placeView.info_window_image.contentDescription = shop.name
             if (isImageLoaded)
             {
                 Picasso.with(context)
@@ -50,7 +51,7 @@ class PlaceInfoWindowAdapter(private val context: Context) : GoogleMap.InfoWindo
     }
 }
 
-class MarkerCallback(val marker: Marker): Callback {
+class MarkerCallback(private val marker: Marker): Callback {
 
     override fun onSuccess()
     {

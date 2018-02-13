@@ -7,12 +7,12 @@ import com.calvo.carolina.util.CodeClosure
 import com.calvo.carolina.util.ErrorClosure
 import java.lang.ref.WeakReference
 
-internal class DeleteAllShopsImpl(private val weakContext: WeakReference<Context>) : DeleteAllShops
+internal class DeleteAllShopsImpl(weakContext: WeakReference<Context>) : DeleteAllShops
 {
     private  val objectInjector = RepositoryObjectInjector(weakContext)
     override fun execute(success: CodeClosure, error: ErrorClosure)
     {
-        val repository: Repository = objectInjector.BuildRepository()
+        val repository: Repository = objectInjector.buildRepository()
         repository.deleteAllShops(success, error)
     }
 }

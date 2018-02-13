@@ -1,24 +1,30 @@
 package com.calvo.carolina.madridshops.activities
 
+
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import android.view.View
+import android.widget.LinearLayout
 import com.calvo.carolina.business.BusinessObjectInjector
 import com.calvo.carolina.business.model.Shop
 import com.calvo.carolina.business.model.Shops
+import com.calvo.carolina.madridshops.MapsConstants
 import com.calvo.carolina.madridshops.R
 import com.calvo.carolina.madridshops.adapters.PlaceInfoWindowAdapter
 import com.calvo.carolina.madridshops.fragments.ListFragment
 import com.calvo.carolina.madridshops.fragments.OnPlaceSelectedListener
+import com.calvo.carolina.madridshops.router.Router
 import com.calvo.carolina.util.GoogleMapsUtil
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import kotlinx.android.synthetic.main.activity_list.*
 import java.util.*
 
 class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
@@ -28,14 +34,18 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
 
     companion object
     {
-        fun intent(context: Context): Intent
+        private const val GO_TO = "GO_TO"
+        private const val SHOPS = "SHOPS"
+        private const val  ACTIVITIES = "ACTIVITIES"
+        fun intentShops(context: Context): Intent
         {
             val intent = Intent(context, ListActivity::class.java)
+            intent.putExtra(GO_TO, SHOPS)
             return intent
         }
     }
 
-    val listFragment by lazy { supportFragmentManager.findFragmentById(R.id.list_fragment) as ListFragment }
+    private val listFragment by lazy { supportFragmentManager.findFragmentById(R.id.list_fragment) as ListFragment }
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -53,18 +63,29 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
 
     private fun setup()
     {
-        val getAllShopsInteractor = BusinessObjectInjector(this).BuildGetAllShopsInteractor()
+        val getAllShopsInteractor = BusinessObjectInjector(this).buildGetAllShopsInteractor()
 
+        togleActivity(true)
         getAllShopsInteractor.execute(
                 Locale.getDefault().language == "es",
                 success =
                 { shops: Shops ->
                     setupList(shops)
                     setupMap(shops)
+                    togleActivity(false)
                 },
                 error = {errorMessage: String ->
-                    Toast.makeText(baseContext, "Error downloading" + errorMessage, Toast.LENGTH_LONG).show()
+
+                    Snackbar.make(findViewById<LinearLayout>(R.id.list_root_view),getString(R.string.error_downloading), Snackbar.LENGTH_INDEFINITE)
+                            .setAction("Retry", {view -> setup() })
+                            .show()
+                    togleActivity(false)
                 })
+    }
+
+    private fun togleActivity(isVisible: Boolean)
+    {
+        list_activity_indicator.visibility = if (isVisible)  View.VISIBLE else View.GONE
     }
 
     private fun setupList(shops: Shops)
@@ -74,8 +95,10 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
 
     override fun onPlaceSelected(shop: Shop)
     {
-        navigateToDetail(shop)
+        Router.navigateToDetail(this, shop)
     }
+
+    private lateinit var googleMap: GoogleMap
 
     private fun setupMap(shops: Shops)
     {
@@ -83,15 +106,12 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
                 { map ->
                     Log.d("Shops", "Hablemu mapa")
                     googleMap = map
-                    GoogleMapsUtil.centerMapInPosition(map, 40.416775, -3.703790)
+                    GoogleMapsUtil.centerMapInPosition(map, MapsConstants.centerPosition.latitude, MapsConstants.centerPosition.longitude, MapsConstants.listMapZoom)
                     setMapSettings(map)
                     GoogleMapsUtil.showUserPosition(baseContext, map, this)
                     addAllPins(map, shops)
                 })
     }
-
-
-    private lateinit var googleMap: GoogleMap
 
     private fun setMapSettings(map: GoogleMap)
     {
@@ -99,21 +119,11 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
         map.uiSettings.isZoomControlsEnabled = true
         map.setOnInfoWindowClickListener{
             if (it != null){
-                navigateToDetail(it.tag as Shop)
+                Router.navigateToDetail(this, it.tag as Shop)
             }
         }
         map.setInfoWindowAdapter(PlaceInfoWindowAdapter(baseContext))
     }
-
-    private fun navigateToDetail(shop: Shop)
-    {
-
-        startActivity(DetailActivity.intent(this, shop))
-
-    }
-
-
-
 
     // Cuando pido permisos llego aquí
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
@@ -128,9 +138,7 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
         }
     }
 
-
-
-    fun addAllPins(map: GoogleMap, shops: Shops)
+    private fun addAllPins(map: GoogleMap, shops: Shops)
     {
         (0 until shops.count())
                 .map { shops.get(it) }
@@ -142,8 +150,8 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
     override fun onCreateOptionsMenu(menu: Menu): Boolean
     {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+        //menuInflater.inflate(R.menu.menu_main, menu)
+        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean
@@ -158,9 +166,4 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
         }
     }
 
-    override fun onDestroy()
-    {
-        super.onDestroy()
-
-    }
 }

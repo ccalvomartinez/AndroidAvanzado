@@ -6,24 +6,24 @@ import com.calvo.carolina.business.interactors.clearallshops.DeleteAllShopsImpl
 import com.calvo.carolina.business.interactors.getallshops.GetAllShopsInteractor
 import com.calvo.carolina.business.interactors.getallshops.GetAllShopsInteractorImpl
 import com.calvo.carolina.business.interactors.isconnected.IsConnectedToInternetInteractor
-import com.calvo.carolina.business.interactors.isconnected.IsConnectedToInternetInteractorFakeImpl
+import com.calvo.carolina.business.interactors.isconnected.IsConnectedToInternetInteractorImpl
 import java.lang.ref.WeakReference
 
 class BusinessObjectInjector(context: Context)
 {
-    val weakContext = WeakReference<Context>(context)
-    fun BuildGetAllShopsInteractor(): GetAllShopsInteractor
+    private val weakContext = WeakReference<Context>(context)
+    fun buildGetAllShopsInteractor(): GetAllShopsInteractor
     {
         return GetAllShopsInteractorImpl(weakContext)
     }
 
-    fun BuildClearAllShopsInteractor(): DeleteAllShops
+    fun buildClearAllShopsInteractor(): DeleteAllShops
     {
         return DeleteAllShopsImpl(weakContext)
     }
 
-    internal fun BuildIsConnectedToInternetInteractor(): IsConnectedToInternetInteractor
+    fun buildIsConnectedToInternetInteractor(): IsConnectedToInternetInteractor
     {
-        return IsConnectedToInternetInteractorFakeImpl()
+        return IsConnectedToInternetInteractorImpl(weakContext)
     }
 }

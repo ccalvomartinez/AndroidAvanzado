@@ -1,15 +1,13 @@
 package com.calvo.carolina.repository.cache
 
-import android.content.Context
 import android.util.Log
 import com.calvo.carolina.repository.db.dao.DAOPersistable
 import com.calvo.carolina.repository.models.ShopEntity
 import com.calvo.carolina.util.CodeClosure
 import com.calvo.carolina.util.ErrorClosure
 import com.calvo.carolina.util.dispatchOnMainThread
-import java.lang.ref.WeakReference
 
-internal class CacheDBImpl(val weakContext: WeakReference<Context>, val shopDAO: DAOPersistable<ShopEntity>) : Cache
+internal class CacheDBImpl(private val shopDAO: DAOPersistable<ShopEntity>) : Cache
 {
 
     override fun getAllShops(success: (shops: List<ShopEntity>) -> Unit, error: ErrorClosure)

@@ -4,6 +4,6 @@ import com.calvo.carolina.util.CodeClosure
 import com.calvo.carolina.util.ErrorClosure
 
 
-internal interface IsConnectedToInternetInteractor {
+interface IsConnectedToInternetInteractor {
     fun execute(success: CodeClosure, errorClosure: ErrorClosure)
 }

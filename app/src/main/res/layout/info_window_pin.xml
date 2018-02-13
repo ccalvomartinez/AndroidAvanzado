@@ -10,7 +10,7 @@
         android:id="@+id/info_window_image"
         android:layout_width="@dimen/info_window_image_size"
         android:layout_height="@dimen/info_window_image_size"
-        tools:contentDescription="Nombre de la tienda" />
+         />
     <TextView
         android:id="@+id/info_window_title"
         android:layout_width="wrap_content"

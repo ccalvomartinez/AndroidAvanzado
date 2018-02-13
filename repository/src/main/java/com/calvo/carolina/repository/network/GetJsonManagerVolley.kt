@@ -15,7 +15,7 @@ internal class GetJsonManagerVolley(private val weakContext: WeakReference<Conte
     // Actividad -> (Strong) Interactor ->(Strong)  Repository ->(Strong)  Volley ->(Strong)  Activity-Context
     // Tenemos un ciclo de punteros strong y eso puede causar pérdida de memoria al no poder eliminarse la actividad cuando pulsamos atrás
     // Entonces el puntero al contexto debe ser weak
-     val requestQueue: RequestQueue by lazy {
+    private val requestQueue: RequestQueue by lazy {
           Volley.newRequestQueue(weakContext.get())
     }
 

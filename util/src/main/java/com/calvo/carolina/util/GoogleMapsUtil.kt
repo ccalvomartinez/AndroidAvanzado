@@ -22,9 +22,9 @@ class GoogleMapsUtil
             mapFragment.getMapAsync(afterGet)
         }
 
-        fun centerMapInPosition(map: GoogleMap, latitude: Double, longitude: Double)
+        fun centerMapInPosition(map: GoogleMap, latitude: Double, longitude: Double, zoom: Float)
         {
-            val cameraposition = CameraPosition.builder().target(LatLng(latitude, longitude)).zoom(12f).build()
+            val cameraposition = CameraPosition.builder().target(LatLng(latitude, longitude)).zoom(zoom).build()
             map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraposition))
         }
 

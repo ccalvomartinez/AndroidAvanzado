@@ -13,25 +13,25 @@ import java.lang.ref.WeakReference
 
 class RepositoryObjectInjector(private val weakContext:  WeakReference<Context>)
 {
-   fun BuildRepository(): Repository
+   fun buildRepository(): Repository
     {
-        return RepositoryImpl(weakContext, BuildCache(), BuildGetJsonManager())
+        return RepositoryImpl(buildCache(), buildGetJsonManager())
     }
-    internal fun BuildCache(): Cache
+    internal fun buildCache(): Cache
     {
-        return CacheDBImpl(weakContext, BuildDAOPersistable())
+        return CacheDBImpl(buildDAOPersistable())
     }
 
-    internal fun BuildDAOPersistable(): DAOPersistable<ShopEntity>
+    internal fun buildDAOPersistable(): DAOPersistable<ShopEntity>
     {
         return ShopDAO(weakContext, "MadridShops.sqlite", 1)
     }
 
-    internal fun BuildDBHelper(name: String, version: Int): DBHelper {
+    internal fun buildDBHelper(name: String, version: Int): DBHelper {
         return DBHelper(weakContext.get()!!, name, null, version)
     }
 
-    internal fun BuildGetJsonManager(): GetJsonManager
+    internal fun buildGetJsonManager(): GetJsonManager
     {
         return GetJsonManagerVolley(weakContext)
     }

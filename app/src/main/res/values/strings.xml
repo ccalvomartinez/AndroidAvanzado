@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">MadridShops</string>
+    <string name="app_name">Madrid Shops &amp; Activities</string>
     <string name="action_settings">Settings</string>
     <string name="shops">Shops</string>
+    <string name="error_downloading">Error retrieving data. Please check your internet connection and try again</string>
+    <string name="check_what_madrid_can_offer">Check what Madrid can offer</string>
+    <string name="opening_hours_text">Opening hours</string>
+    <string name="address_text">Address</string>
+    <string name="description_text">Description</string>
 </resources>

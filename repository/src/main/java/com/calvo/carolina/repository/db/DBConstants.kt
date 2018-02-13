@@ -2,8 +2,7 @@ package com.calvo.carolina.repository.db
 
 internal object DBConstants
 {
-    const val INVALID_ID: Long = -1
-    val TABLE_SHOP = "SHOP"
+     const val TABLE_SHOP = "SHOP"
 
     // Table field constants
     const val KEY_SHOP_DATABASE_ID = "_id"
@@ -55,7 +54,7 @@ internal object DBConstants
                     + KEY_SHOP_OPENING_HOURS_EN + " text "
                     + ");")
 
-    val DROP_DATABASE_SCRIPTS = ""
+    const val DROP_DATABASE_SCRIPTS = ""
 
     val CREATE_DATABASE_SCRIPTS = arrayOf(SQL_SCRIPT_CREATE_SHOP_TABLE)
 

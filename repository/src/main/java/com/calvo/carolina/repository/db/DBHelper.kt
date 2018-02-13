@@ -42,5 +42,5 @@ fun convert(boolean: Boolean): Int {
 }
 
 fun convert(int: Int): Boolean {
-    return  !(int == 0)
+    return  int != 0
 }

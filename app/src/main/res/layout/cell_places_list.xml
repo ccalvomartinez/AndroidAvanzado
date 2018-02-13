@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="1dp"
+    android:background="@color/colorAccent">
 
     <ImageView
         android:id="@+id/cell_list_image"
@@ -17,6 +19,7 @@
         android:layout_height="match_parent"
         android:padding="@dimen/cell_padding"
         android:orientation="vertical"
+        android:background="#FFFFFF"
        >
 
         <TextView

@@ -1,41 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <fragment
         android:id="@+id/detail_map_fragment"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
+        android:layout_width="0px"
         android:layout_height="0px"
         android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@id/detail_guide_50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/colorPrimaryDark" />
 
-    <TextView
-        android:id="@+id/detail_opening"
+    <android.support.constraint.Guideline
+        android:id="@+id/detail_guide_50"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       />
-    <TextView
-        android:id="@+id/detail_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="1">
-        <TextView
-            android:id="@+id/detail_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_guide_50">
 
-            />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/detail_opening_caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/caption_margin"
+                android:text="@string/opening_hours_text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+               />
+
+            <TextView
+                android:id="@+id/detail_opening"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/cell_padding"
+                app:layout_constraintTop_toBottomOf="@id/detail_opening_caption"
+                tools:text="Balals asldlfs lsdlfs sfsdfdfas asfdfs asfdsdf sfsdfs asfdsf asfdas " />
+
+            <TextView
+                android:id="@+id/detail_address_caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/caption_margin"
+                android:text="@string/address_text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/detail_opening" />
+
+            <TextView
+                android:id="@+id/detail_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/cell_padding"
+                app:layout_constraintTop_toBottomOf="@id/detail_address_caption"
+                tools:text="Balals asldlfs lsdlfs sfsdfdfas asfdfs asfdsdf sfsdfs asfdsf asfdas " />
+
+            <TextView
+                android:id="@+id/detail_description_caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/caption_margin"
+                android:text="@string/description_text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/detail_address" />
+
+            <TextView
+                android:id="@+id/detail_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/cell_padding"
+                app:layout_constraintTop_toBottomOf="@id/detail_description_caption"
+                tools:text="Balals asldlfs lsdlfs sfsdfdfas asfdfs asfdsdf sfsdfs asfdsf asfdas " />
+        </android.support.constraint.ConstraintLayout>
+
     </ScrollView>
 
 
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

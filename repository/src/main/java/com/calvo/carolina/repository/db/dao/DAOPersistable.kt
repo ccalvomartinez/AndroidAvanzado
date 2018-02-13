@@ -2,7 +2,7 @@ package com.calvo.carolina.repository.db.dao
 
 import android.database.Cursor
 
-interface DAOWritable<T> {
+interface DAOWritable<in T> {
     fun insert(element: T): Long
 
     fun insert(elements: List<T>): Boolean
@@ -23,7 +23,7 @@ interface DAOWritable<T> {
     fun deleteAll(): Boolean
     }
 
-interface  DAOReadable<T> {
+interface  DAOReadable<out T> {
     fun query(databaseID: Long): T?
     fun query(): List<T>
     fun queryCursor(databaseID: Long): Cursor
