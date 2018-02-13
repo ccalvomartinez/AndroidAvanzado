@@ -2,7 +2,7 @@ package com.calvo.carolina.business.model
 
 import java.io.Serializable
 
-data class Shop(override val id: Int,
+data class Activity(override val id: Int,
                 override val name: String,
                 override val description: String,
                 override val openingHours: String,

@@ -1,6 +1,6 @@
 package com.calvo.carolina.repository.db
 
-internal object DBConstants
+internal object DBConstantsShops
 {
      const val TABLE_SHOP = "SHOP"
 
@@ -36,7 +36,7 @@ internal object DBConstants
             KEY_SHOP_OPENING_HOURS_ES,
             KEY_SHOP_OPENING_HOURS_EN)
 
-    private val SQL_SCRIPT_CREATE_SHOP_TABLE = (
+    private const val SQL_SCRIPT_CREATE_SHOP_TABLE = (
             "create table " + TABLE_SHOP
                     + "( "
                     + KEY_SHOP_DATABASE_ID + " integer primary key autoincrement, "

@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.calvo.carolina.business.model.Shop
+import com.calvo.carolina.business.model.Place
 import com.calvo.carolina.madridshops.MapsConstants
 import com.calvo.carolina.madridshops.R
 import com.calvo.carolina.util.GoogleMapsUtil
@@ -18,17 +18,17 @@ class DetailActivity : AppCompatActivity()
 {
     companion object
     {
-        const val DETAIL_SHOP = "DETAIL_SHOP"
-        fun intent(context: Context, shop: Shop): Intent
+        const val DETAIL_PLACE = "DETAIL_PLACE"
+        fun intent(context: Context, place: Place): Intent
         {
             val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra(DETAIL_SHOP, shop)
+            intent.putExtra(DETAIL_PLACE, place)
             return intent
         }
     }
 
-    private val shop by lazy {
-        intent.getSerializableExtra(DETAIL_SHOP) as Shop
+    private val place by lazy {
+        intent.getSerializableExtra(DETAIL_PLACE) as Place
     }
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -47,7 +47,7 @@ class DetailActivity : AppCompatActivity()
                 { map ->
                     Log.d("Shops", "Hablemu mapa")
                     googleMap = map
-                    GoogleMapsUtil.centerMapInPosition(map, shop.latitude, shop.longitude, MapsConstants.detailMapZoom)
+                    GoogleMapsUtil.centerMapInPosition(map, place.latitude, place.longitude, MapsConstants.detailMapZoom)
                     setMapSettings(map)
                     GoogleMapsUtil.showUserPosition(baseContext, map, this)
                     addShopPin()
@@ -63,14 +63,14 @@ class DetailActivity : AppCompatActivity()
 
     private fun addShopPin()
     {
-        GoogleMapsUtil.addPin(googleMap, shop.latitude, shop.longitude, shop.name)
+        GoogleMapsUtil.addPin(googleMap, place.latitude, place.longitude, place.name)
     }
     private fun renderView()
     {
-        updateActionBarTitle(shop.name)
-        detail_description.text = shop.description
-        detail_address.text = shop.address
-        detail_opening.text = shop.openingHours
+        updateActionBarTitle(place.name)
+        detail_description.text = place.description
+        detail_address.text = place.address
+        detail_opening.text = place.openingHours
 
     }
     private fun updateActionBarTitle(title:String)

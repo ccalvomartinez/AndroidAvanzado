@@ -3,6 +3,8 @@ package com.calvo.carolina.business
 import android.content.Context
 import com.calvo.carolina.business.interactors.clearallshops.DeleteAllShops
 import com.calvo.carolina.business.interactors.clearallshops.DeleteAllShopsImpl
+import com.calvo.carolina.business.interactors.getallactivities.GetAllActivitiesInteractor
+import com.calvo.carolina.business.interactors.getallactivities.GetAllActivitiesInteractorImpl
 import com.calvo.carolina.business.interactors.getallshops.GetAllShopsInteractor
 import com.calvo.carolina.business.interactors.getallshops.GetAllShopsInteractorImpl
 import com.calvo.carolina.business.interactors.isconnected.IsConnectedToInternetInteractor
@@ -15,6 +17,11 @@ class BusinessObjectInjector(context: Context)
     fun buildGetAllShopsInteractor(): GetAllShopsInteractor
     {
         return GetAllShopsInteractorImpl(weakContext)
+    }
+
+    fun buildGetAllActivitiesInteractor(): GetAllActivitiesInteractor
+    {
+        return GetAllActivitiesInteractorImpl(weakContext)
     }
 
     fun buildClearAllShopsInteractor(): DeleteAllShops

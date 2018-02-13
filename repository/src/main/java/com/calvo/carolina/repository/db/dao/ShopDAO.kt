@@ -4,7 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import com.calvo.carolina.repository.db.DBConstants
+import com.calvo.carolina.repository.db.DBConstantsShops
 import com.calvo.carolina.repository.db.DBHelper
 import com.calvo.carolina.repository.models.ShopEntity
 import java.lang.ref.WeakReference
@@ -23,7 +23,7 @@ class ShopDAO(weakContext: WeakReference<Context>, name: String, version: Int) :
         val id: Long
         try
         {
-            id = dbReadWriteConnection.insert(DBConstants.TABLE_SHOP, null, contentValues(element))
+            id = dbReadWriteConnection.insert(DBConstantsShops.TABLE_SHOP, null, contentValues(element))
             dbReadWriteConnection.setTransactionSuccessful()
 
         }
@@ -43,7 +43,7 @@ class ShopDAO(weakContext: WeakReference<Context>, name: String, version: Int) :
             for (i in 0 until elements.count())
             {
 
-                val id = dbReadWriteConnection.insert(DBConstants.TABLE_SHOP, null, contentValues(elements[i]))
+                val id = dbReadWriteConnection.insert(DBConstantsShops.TABLE_SHOP, null, contentValues(elements[i]))
                 if (id <= 0)
                 {
                     isSuccessfulInsert = false
@@ -66,17 +66,17 @@ class ShopDAO(weakContext: WeakReference<Context>, name: String, version: Int) :
     {
         val content = ContentValues()
 
-        content.put(DBConstants.KEY_SHOP_ID_JSON, shopEntity.id)
-        content.put(DBConstants.KEY_SHOP_NAME, shopEntity.name)
-        content.put(DBConstants.KEY_SHOP_DESCRIPTION_ES, shopEntity.description_es)
-        content.put(DBConstants.KEY_SHOP_DESCRIPTION_EN, shopEntity.description_en)
-        content.put(DBConstants.KEY_SHOP_LATITUDE, shopEntity.latitude)
-        content.put(DBConstants.KEY_SHOP_LONGITUDE, shopEntity.longitude)
-        content.put(DBConstants.KEY_SHOP_IMAGE_URL, shopEntity.image)
-        content.put(DBConstants.KEY_SHOP_LOGO_IMAGE_URL, shopEntity.logo)
-        content.put(DBConstants.KEY_SHOP_ADDRESS, shopEntity.address)
-        content.put(DBConstants.KEY_SHOP_OPENING_HOURS_ES, shopEntity.openingHours_es)
-        content.put(DBConstants.KEY_SHOP_OPENING_HOURS_EN, shopEntity.openingHours_en)
+        content.put(DBConstantsShops.KEY_SHOP_ID_JSON, shopEntity.id)
+        content.put(DBConstantsShops.KEY_SHOP_NAME, shopEntity.name)
+        content.put(DBConstantsShops.KEY_SHOP_DESCRIPTION_ES, shopEntity.description_es)
+        content.put(DBConstantsShops.KEY_SHOP_DESCRIPTION_EN, shopEntity.description_en)
+        content.put(DBConstantsShops.KEY_SHOP_LATITUDE, shopEntity.latitude)
+        content.put(DBConstantsShops.KEY_SHOP_LONGITUDE, shopEntity.longitude)
+        content.put(DBConstantsShops.KEY_SHOP_IMAGE_URL, shopEntity.image)
+        content.put(DBConstantsShops.KEY_SHOP_LOGO_IMAGE_URL, shopEntity.logo)
+        content.put(DBConstantsShops.KEY_SHOP_ADDRESS, shopEntity.address)
+        content.put(DBConstantsShops.KEY_SHOP_OPENING_HOURS_ES, shopEntity.openingHours_es)
+        content.put(DBConstantsShops.KEY_SHOP_OPENING_HOURS_EN, shopEntity.openingHours_en)
 
         return content
     }
@@ -87,7 +87,7 @@ class ShopDAO(weakContext: WeakReference<Context>, name: String, version: Int) :
         val registersAffected: Long
         try
         {
-            registersAffected = dbReadWriteConnection.update(DBConstants.TABLE_SHOP, contentValues(element), DBConstants.KEY_SHOP_DATABASE_ID + " = ?", arrayOf(databaseID.toString())).toLong()
+            registersAffected = dbReadWriteConnection.update(DBConstantsShops.TABLE_SHOP, contentValues(element), DBConstantsShops.KEY_SHOP_DATABASE_ID + " = ?", arrayOf(databaseID.toString())).toLong()
             if (registersAffected > 0)
             {
                 dbReadWriteConnection.setTransactionSuccessful()
@@ -121,7 +121,7 @@ class ShopDAO(weakContext: WeakReference<Context>, name: String, version: Int) :
         val registersAffected: Long
         try
         {
-            registersAffected = dbReadWriteConnection.delete(DBConstants.TABLE_SHOP, DBConstants.KEY_SHOP_DATABASE_ID + " = ?", arrayOf(databaseID.toString())).toLong()
+            registersAffected = dbReadWriteConnection.delete(DBConstantsShops.TABLE_SHOP, DBConstantsShops.KEY_SHOP_DATABASE_ID + " = ?", arrayOf(databaseID.toString())).toLong()
 
             if (registersAffected > 0)
             {
@@ -142,7 +142,7 @@ class ShopDAO(weakContext: WeakReference<Context>, name: String, version: Int) :
         val successfulDelete: Boolean
         try
         {
-            successfulDelete = dbReadWriteConnection.delete(DBConstants.TABLE_SHOP, null, null).toLong() >= 0
+            successfulDelete = dbReadWriteConnection.delete(DBConstantsShops.TABLE_SHOP, null, null).toLong() >= 0
 
             if (successfulDelete)
             {
@@ -179,13 +179,13 @@ class ShopDAO(weakContext: WeakReference<Context>, name: String, version: Int) :
         val queryResult = ArrayList<ShopEntity>()
 
         val cursor = dbReadOnlyConnection.query(
-                DBConstants.TABLE_SHOP,
-                DBConstants.ALL_COLUMNS,
+                DBConstantsShops.TABLE_SHOP,
+                DBConstantsShops.ALL_COLUMNS,
                 null,
                 null,
                 "",
                 "",
-                DBConstants.KEY_SHOP_DATABASE_ID
+                DBConstantsShops.KEY_SHOP_DATABASE_ID
         )
 
         while (cursor.moveToNext())
@@ -203,31 +203,31 @@ class ShopDAO(weakContext: WeakReference<Context>, name: String, version: Int) :
             return null
         }
         return ShopEntity(
-                cursor.getLong(cursor.getColumnIndex(DBConstants.KEY_SHOP_ID_JSON)),
-                cursor.getLong(cursor.getColumnIndex(DBConstants.KEY_SHOP_DATABASE_ID)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_NAME)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_DESCRIPTION_ES)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_DESCRIPTION_EN)),
-                cursor.getFloat(cursor.getColumnIndex(DBConstants.KEY_SHOP_LATITUDE)),
-                cursor.getFloat(cursor.getColumnIndex(DBConstants.KEY_SHOP_LONGITUDE)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_IMAGE_URL)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_LOGO_IMAGE_URL)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_OPENING_HOURS_ES)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_OPENING_HOURS_EN)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_ADDRESS))
+                cursor.getLong(cursor.getColumnIndex(DBConstantsShops.KEY_SHOP_ID_JSON)),
+                cursor.getLong(cursor.getColumnIndex(DBConstantsShops.KEY_SHOP_DATABASE_ID)),
+                cursor.getString(cursor.getColumnIndex(DBConstantsShops.KEY_SHOP_NAME)),
+                cursor.getString(cursor.getColumnIndex(DBConstantsShops.KEY_SHOP_DESCRIPTION_ES)),
+                cursor.getString(cursor.getColumnIndex(DBConstantsShops.KEY_SHOP_DESCRIPTION_EN)),
+                cursor.getFloat(cursor.getColumnIndex(DBConstantsShops.KEY_SHOP_LATITUDE)),
+                cursor.getFloat(cursor.getColumnIndex(DBConstantsShops.KEY_SHOP_LONGITUDE)),
+                cursor.getString(cursor.getColumnIndex(DBConstantsShops.KEY_SHOP_IMAGE_URL)),
+                cursor.getString(cursor.getColumnIndex(DBConstantsShops.KEY_SHOP_LOGO_IMAGE_URL)),
+                cursor.getString(cursor.getColumnIndex(DBConstantsShops.KEY_SHOP_OPENING_HOURS_ES)),
+                cursor.getString(cursor.getColumnIndex(DBConstantsShops.KEY_SHOP_OPENING_HOURS_EN)),
+                cursor.getString(cursor.getColumnIndex(DBConstantsShops.KEY_SHOP_ADDRESS))
         )
     }
 
     override fun queryCursor(databaseID: Long): Cursor
     {
         return dbReadOnlyConnection.query(
-                DBConstants.TABLE_SHOP,
-                DBConstants.ALL_COLUMNS,
-                DBConstants.KEY_SHOP_DATABASE_ID + " = ?",
+                DBConstantsShops.TABLE_SHOP,
+                DBConstantsShops.ALL_COLUMNS,
+                DBConstantsShops.KEY_SHOP_DATABASE_ID + " = ?",
                 arrayOf(databaseID.toString()),
                 "",
                 "",
-                DBConstants.KEY_SHOP_DATABASE_ID
+                DBConstantsShops.KEY_SHOP_DATABASE_ID
         )
     }
 }

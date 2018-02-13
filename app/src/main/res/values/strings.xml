@@ -7,4 +7,7 @@
     <string name="opening_hours_text">Opening hours</string>
     <string name="address_text">Address</string>
     <string name="description_text">Description</string>
+    <string name="main_activities_button_text">Activities</string>
+    <string name="activities">Activities</string>
+    <string name="list_activity_retry">Retry</string>
 </resources>

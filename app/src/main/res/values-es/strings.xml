@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="action_settings">Opciones</string>
+    <string name="action_settings">Opciones</string>
     <string name="shops">Tiendas</string>
     <string name="error_downloading">Error al recuperar los datos. Por favor, comprueba tu conexión a internet y vuelve a intentarlo.</string>
     <string name="check_what_madrid_can_offer">Comprueba lo que Madrid puede ofrecer</string>
     <string name="opening_hours_text">Horario de apertura</string>
-  <string name="address_text">Dirección</string>
-  <string name="description_text">Descripción</string>
+    <string name="address_text">Dirección</string>
+    <string name="description_text">Descripción</string>
+    <string name="main_activities_button_text">Actividades</string>
+    <string name="activities">Actividades</string>
+    <string name="list_activity_retry">Reintentar</string>
 </resources>

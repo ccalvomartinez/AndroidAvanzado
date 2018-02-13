@@ -24,7 +24,8 @@ class DBHelper(context: Context?, name: String?, factory: SQLiteDatabase.CursorF
     override fun onCreate(db: SQLiteDatabase?)
     {
         // db en realidad es una conexión a la base de datos
-        DBConstants.CREATE_DATABASE_SCRIPTS.forEach { db?.execSQL(it)}
+        DBConstantsShops.CREATE_DATABASE_SCRIPTS.forEach { db?.execSQL(it)}
+        DBConstantsActivities.CREATE_DATABASE_SCRIPTS.forEach { db?.execSQL(it) }
     }
 
     // Se ejecuta cada vez que aumentamos la versión de la base de datos.

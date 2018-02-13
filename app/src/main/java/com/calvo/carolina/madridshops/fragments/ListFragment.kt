@@ -11,9 +11,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.calvo.carolina.business.model.Shop
-import com.calvo.carolina.business.model.Shops
-
+import com.calvo.carolina.business.model.Place
+import com.calvo.carolina.business.model.Places
 import com.calvo.carolina.madridshops.R
 import com.calvo.carolina.madridshops.adapters.PlacesListAdapter
 
@@ -34,17 +33,17 @@ class ListFragment : Fragment()
         root = inflater!!.inflate(R.layout.fragment_list, container, false)
         return root
     }
-    fun setShops(shops: Shops)
+    fun setPlaces(places: Places)
     {
         val placesList = root.findViewById<RecyclerView>(R.id.list)
         placesList.layoutManager = LinearLayoutManager(activity)
         placesList.itemAnimator = DefaultItemAnimator()
-        val placesListAdapter = PlacesListAdapter(shops)
+        val placesListAdapter = PlacesListAdapter(places)
         placesListAdapter.listener = object : PlacesListAdapter.OnRowClickListener
         {
-            override fun onPlaceSelected(shop: Shop)
+            override fun onPlaceSelected(place: Place)
             {
-                onPlaceSelectedListener?.onPlaceSelected(shop)
+                onPlaceSelectedListener?.onPlaceSelected(place)
             }
         }
         placesList.adapter = placesListAdapter
@@ -79,5 +78,5 @@ class ListFragment : Fragment()
 
 interface OnPlaceSelectedListener
 {
-    fun onPlaceSelected(shop: Shop)
+    fun onPlaceSelected(place: Place)
 }

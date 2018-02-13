@@ -4,8 +4,10 @@ import android.content.Context
 import com.calvo.carolina.repository.cache.Cache
 import com.calvo.carolina.repository.cache.CacheDBImpl
 import com.calvo.carolina.repository.db.DBHelper
+import com.calvo.carolina.repository.db.dao.ActivityDAO
 import com.calvo.carolina.repository.db.dao.DAOPersistable
 import com.calvo.carolina.repository.db.dao.ShopDAO
+import com.calvo.carolina.repository.models.ActivityEntity
 import com.calvo.carolina.repository.models.ShopEntity
 import com.calvo.carolina.repository.network.GetJsonManager
 import com.calvo.carolina.repository.network.GetJsonManagerVolley
@@ -19,12 +21,17 @@ class RepositoryObjectInjector(private val weakContext:  WeakReference<Context>)
     }
     internal fun buildCache(): Cache
     {
-        return CacheDBImpl(buildDAOPersistable())
+        return CacheDBImpl(buildDAOPersistableShops(), buildDAOPersistableActivities())
     }
 
-    internal fun buildDAOPersistable(): DAOPersistable<ShopEntity>
+    internal fun buildDAOPersistableShops(): DAOPersistable<ShopEntity>
     {
         return ShopDAO(weakContext, "MadridShops.sqlite", 1)
+    }
+
+    internal fun buildDAOPersistableActivities(): DAOPersistable<ActivityEntity>
+    {
+        return ActivityDAO(weakContext, "MadridShops.sqlite", 1)
     }
 
     internal fun buildDBHelper(name: String, version: Int): DBHelper {

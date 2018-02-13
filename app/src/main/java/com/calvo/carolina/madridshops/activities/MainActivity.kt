@@ -15,15 +15,20 @@ class MainActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        setShopsButton()
+        setupButtons()
 
     }
-    private fun setShopsButton()
+    private fun setupButtons()
     {
         val shopButton  = findViewById<View>(R.id.go_shops)
         shopButton.setOnClickListener { _ ->
             Router.navigateToShopList(this)
 
+        }
+
+        val activitiesButton = findViewById<View>(R.id.go_activities)
+        activitiesButton.setOnClickListener { _ ->
+            Router.navigateToActivitiesList(this)
         }
     }
 }

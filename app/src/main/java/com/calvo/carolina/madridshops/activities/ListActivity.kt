@@ -13,8 +13,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import com.calvo.carolina.business.BusinessObjectInjector
+import com.calvo.carolina.business.model.Place
+import com.calvo.carolina.business.model.Places
 import com.calvo.carolina.business.model.Shop
-import com.calvo.carolina.business.model.Shops
 import com.calvo.carolina.madridshops.MapsConstants
 import com.calvo.carolina.madridshops.R
 import com.calvo.carolina.madridshops.adapters.PlaceInfoWindowAdapter
@@ -31,76 +32,112 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
 {
 
 
-
     companion object
     {
         private const val GO_TO = "GO_TO"
         private const val SHOPS = "SHOPS"
-        private const val  ACTIVITIES = "ACTIVITIES"
+        private const val ACTIVITIES = "ACTIVITIES"
         fun intentShops(context: Context): Intent
         {
             val intent = Intent(context, ListActivity::class.java)
             intent.putExtra(GO_TO, SHOPS)
             return intent
         }
+
+        fun intentActivities(context: Context): Intent
+        {
+            val intent = Intent(context, ListActivity::class.java)
+            intent.putExtra(GO_TO, ACTIVITIES)
+            return intent
+        }
     }
 
     private val listFragment by lazy { supportFragmentManager.findFragmentById(R.id.list_fragment) as ListFragment }
+    private val placeType by lazy { intent.getStringExtra(GO_TO) }
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
+
         updateActionBarTitle()
         setup()
         Log.d("MadridShops", "onCreate ListActivity")
     }
+
     // TODO("Poner tiendas o actividades dependiento de quien me llame")
     private fun updateActionBarTitle()
     {
-       supportActionBar?.title = getString(R.string.shops)
+        supportActionBar?.title = if (placeType == SHOPS) getString(R.string.shops) else getString(R.string.activities)
     }
 
     private fun setup()
     {
-        val getAllShopsInteractor = BusinessObjectInjector(this).buildGetAllShopsInteractor()
-
         togleActivity(true)
-        getAllShopsInteractor.execute(
-                Locale.getDefault().language == "es",
-                success =
-                { shops: Shops ->
-                    setupList(shops)
-                    setupMap(shops)
-                    togleActivity(false)
-                },
-                error = {errorMessage: String ->
 
-                    Snackbar.make(findViewById<LinearLayout>(R.id.list_root_view),getString(R.string.error_downloading), Snackbar.LENGTH_INDEFINITE)
-                            .setAction("Retry", {view -> setup() })
-                            .show()
-                    togleActivity(false)
-                })
+        if (placeType == SHOPS)
+        {
+            val getAllShopsInteractor = BusinessObjectInjector(this).buildGetAllShopsInteractor()
+            getAllShopsInteractor.execute(
+                    Locale.getDefault().language == "es",
+                    success =
+                    { places: Places ->
+                        onGetPlaces(places)
+                    },
+                    error = { _: String ->
+                        onErrorGettingPlaces()
+                    })
+        }
+        else
+        {
+            val getAllActivitiesInteractor = BusinessObjectInjector(this).buildGetAllActivitiesInteractor()
+            getAllActivitiesInteractor.execute(
+                    Locale.getDefault().language == "es",
+                    success =
+                    { places: Places ->
+                        onGetPlaces(places)
+                    },
+                    error = { _: String ->
+                        onErrorGettingPlaces()
+                    })
+        }
+
     }
 
     private fun togleActivity(isVisible: Boolean)
     {
-        list_activity_indicator.visibility = if (isVisible)  View.VISIBLE else View.GONE
+        list_activity_indicator.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
-    private fun setupList(shops: Shops)
+    private fun onGetPlaces(places: Places)
     {
-        listFragment.setShops(shops)
+        setupList(places)
+        setupMap(places)
+        togleActivity(false)
     }
 
-    override fun onPlaceSelected(shop: Shop)
+    private fun onErrorGettingPlaces()
     {
-        Router.navigateToDetail(this, shop)
+
+        Snackbar.make(findViewById<LinearLayout>(R.id.list_root_view), getString(R.string.error_downloading), Snackbar.LENGTH_INDEFINITE)
+                .setAction(getString(R.string.list_activity_retry), { view -> setup() })
+                .show()
+        togleActivity(false)
+    }
+
+    private fun setupList(places: Places)
+    {
+        listFragment.setPlaces(places)
+    }
+
+    override fun onPlaceSelected(place: Place)
+    {
+        Router.navigateToDetail(this, place)
     }
 
     private lateinit var googleMap: GoogleMap
 
-    private fun setupMap(shops: Shops)
+    private fun setupMap(places: Places)
     {
         GoogleMapsUtil.initializeMap(supportFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment,
                 { map ->
@@ -109,7 +146,7 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
                     GoogleMapsUtil.centerMapInPosition(map, MapsConstants.centerPosition.latitude, MapsConstants.centerPosition.longitude, MapsConstants.listMapZoom)
                     setMapSettings(map)
                     GoogleMapsUtil.showUserPosition(baseContext, map, this)
-                    addAllPins(map, shops)
+                    addAllPins(map, places)
                 })
     }
 
@@ -117,8 +154,9 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
     {
         map.uiSettings.isRotateGesturesEnabled = false
         map.uiSettings.isZoomControlsEnabled = true
-        map.setOnInfoWindowClickListener{
-            if (it != null){
+        map.setOnInfoWindowClickListener {
+            if (it != null)
+            {
                 Router.navigateToDetail(this, it.tag as Shop)
             }
         }
@@ -131,22 +169,23 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 10)
         {
-            if(grantResults.any { it == PackageManager.PERMISSION_GRANTED })
+            if (grantResults.any { it == PackageManager.PERMISSION_GRANTED })
             {
                 GoogleMapsUtil.showUserPosition(baseContext, googleMap, this)
             }
         }
     }
 
-    private fun addAllPins(map: GoogleMap, shops: Shops)
+    private fun addAllPins(map: GoogleMap, places: Places)
     {
-        (0 until shops.count())
-                .map { shops.get(it) }
+        (0 until places.count())
+                .map { places.get(it) }
                 .forEach {
                     val marker = GoogleMapsUtil.addPin(map, it.latitude, it.longitude, it.name)
                     marker.tag = it
                 }
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean
     {
         // Inflate the menu; this adds items to the action bar if it is present.

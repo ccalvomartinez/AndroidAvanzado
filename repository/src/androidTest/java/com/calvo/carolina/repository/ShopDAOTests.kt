@@ -1,15 +1,13 @@
 package com.calvo.carolina.repository
 
+
 import android.content.Context
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import com.calvo.carolina.repository.models.ShopEntity
-import com.calvo.carolina.repository.util.RepositoryObjectInjector
-
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 import java.lang.ref.WeakReference
 
 /**
@@ -33,7 +31,7 @@ class ShopDAOTests
     {
         // Arrange
         val shop = ShopEntity(1, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
-        val shopDAO =objectInjector.BuildShopDAO()
+        val shopDAO =objectInjector.buildDAOPersistableShops()
 
         // Act
         val id = shopDAO.insert(shop)
@@ -49,7 +47,7 @@ class ShopDAOTests
         // Arrange
         val shop = ShopEntity(1, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
 
-        val shopDAO = objectInjector.BuildShopDAO()
+        val shopDAO = objectInjector.buildDAOPersistableShops()
 
         val id = shopDAO.insert(shop)
         assertTrue("El id tiene que ser mayor que 0", id > 0)
@@ -67,7 +65,7 @@ class ShopDAOTests
     fun testDeleteAll_given_no_rows_in_database_returns_true()
     {
         // Arrange
-        val shopDAO = objectInjector.BuildShopDAO()
+        val shopDAO = objectInjector.buildDAOPersistableShops()
         shopDAO.deleteAll()
         // Act
 
@@ -84,7 +82,7 @@ class ShopDAOTests
         // Arrange
         val shop = ShopEntity(1, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
         val shop2 = ShopEntity(2, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
-        val shopDAO = objectInjector.BuildShopDAO()
+        val shopDAO = objectInjector.buildDAOPersistableShops()
 
         // Act
         val id = shopDAO.insert(shop)
@@ -99,7 +97,7 @@ class ShopDAOTests
     fun testQuery_given_two_rows_inserted_return_two_elements()
     {
         // Arrange
-        val shopDAO = objectInjector.BuildShopDAO()
+        val shopDAO = objectInjector.buildDAOPersistableShops()
         shopDAO.deleteAll()
         val shop = ShopEntity(1, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
         val shop2 = ShopEntity(1, 2, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
@@ -118,7 +116,7 @@ class ShopDAOTests
     fun testQueryByID_given_row_inserted_return_correct_element()
     {
         // Arrange
-        val shopDAO = objectInjector.BuildShopDAO()
+        val shopDAO = objectInjector.buildDAOPersistableShops()
         shopDAO.deleteAll()
         val shop = ShopEntity(1, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
 
@@ -139,7 +137,7 @@ class ShopDAOTests
     fun testQueryByID_given_databaseIDNotExists_return_null()
     {
         // Arrange
-        val shopDAO = objectInjector.BuildShopDAO()
+        val shopDAO = objectInjector.buildDAOPersistableShops()
         shopDAO.deleteAll()
 
         // Act
@@ -154,7 +152,7 @@ class ShopDAOTests
     fun testUpdate_given_row_updates_return_correct_element()
     {
         // Arrange
-        val shopDAO = objectInjector.BuildShopDAO()
+        val shopDAO = objectInjector.buildDAOPersistableShops()
         shopDAO.deleteAll()
         val shop = ShopEntity(1, 1, "MyShop", "", "",1.0F, 2.0F, "", "", "", "","")
 

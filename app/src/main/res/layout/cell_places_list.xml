@@ -11,8 +11,9 @@
         android:id="@+id/cell_list_image"
         android:layout_width="@dimen/cell_image_size"
         android:layout_height="@dimen/cell_image_size"
-        tools:background="@color/colorAccent"
-        android:contentDescription="@string/shops" />
+        android:contentDescription="@string/shops"
+        android:scaleType="fitXY"
+        tools:background="@color/colorAccent" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,6 +35,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="Horario de apertura" />
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Horario de apertura"
+            />
     </LinearLayout>
 </LinearLayout>

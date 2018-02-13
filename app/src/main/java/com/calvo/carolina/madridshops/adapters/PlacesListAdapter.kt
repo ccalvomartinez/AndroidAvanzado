@@ -6,14 +6,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.calvo.carolina.business.model.Shop
-import com.calvo.carolina.business.model.Shops
+import com.calvo.carolina.business.model.Place
+import com.calvo.carolina.business.model.Places
 import com.calvo.carolina.madridshops.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cell_places_list.view.*
 
 
-class PlacesListAdapter(private val shops: Shops): RecyclerView.Adapter<PlacesListAdapter.PlaceViewHolder>()
+class PlacesListAdapter(private val places: Places): RecyclerView.Adapter<PlacesListAdapter.PlaceViewHolder>()
 {
     var listener: OnRowClickListener? = null
 
@@ -29,31 +29,31 @@ class PlacesListAdapter(private val shops: Shops): RecyclerView.Adapter<PlacesLi
 
     override fun onBindViewHolder(holder: PlaceViewHolder?, position: Int)
     {
-        holder?.bindShop(shops.get(position))
+        holder?.bindShop(places.get(position))
     }
 
     override fun getItemCount(): Int
     {
-        return shops.count()
+        return places.count()
     }
 
     inner class PlaceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
-        fun bindShop(shop: Shop)
+        fun bindShop(place: Place)
         {
 
-            itemView.cell_list_name.text = shop.name
-            itemView.cell_list_opening.text = shop.openingHours
+            itemView.cell_list_name.text = place.name
+            itemView.cell_list_opening.text = place.openingHours
             Picasso.with(itemView.context)
-                    .load(shop.logo)
+                    .load(place.logo)
                     .placeholder(R.drawable.tienda_ico)
                     .into(itemView.cell_list_image)
-            itemView.setOnClickListener { listener?.onPlaceSelected(shop) }
+            itemView.setOnClickListener { listener?.onPlaceSelected(place) }
         }
     }
 
     interface OnRowClickListener
     {
-        fun onPlaceSelected(shop: Shop)
+        fun onPlaceSelected(place: Place)
     }
 }
