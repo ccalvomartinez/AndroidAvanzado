@@ -19,6 +19,9 @@ import org.powermock.modules.junit4.PowerMockRunner
 @PrepareForTest(Looper::class, CacheDBImpl::class)
 class CacheTests
 {
+    // TODO ("Hacer tests de actividades")
+    // TODO ("Hacer tests de Repositorio")
+    // TODO ("Hacer tests de ObjectInjector")
     @Before
     fun setUp()
     {

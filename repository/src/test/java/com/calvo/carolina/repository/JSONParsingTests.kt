@@ -1,15 +1,15 @@
 package com.calvo.carolina.repository
 
-import org.junit.Test
-
 import com.calvo.carolina.repository.network.json.JsonEntitiesParser
 import com.calvo.carolina.repository.network.json.model.ListShopsJsonEntity
 import com.calvo.carolina.repository.network.json.model.ShopJsonModel
 import com.calvo.carolina.repository.util.ReadJsonFile
 import org.junit.Assert.*
+import org.junit.Test
 
 class JSONParsingTests
 {
+    // TODO("Hacer test de parseo de actividades")
     @Test
     @Throws(Exception::class)
     fun given_valid_JsonString_parses_correcly()
