@@ -1,7 +1,6 @@
 package com.calvo.carolina.repository.network
 
 import android.content.Context
-import android.util.Log
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -25,7 +24,6 @@ internal class GetJsonManagerVolley(private val weakContext: WeakReference<Conte
         val request = StringRequest( url,
                 Response.Listener
                 {
-                    Log.d("JSON", it)
                     success(it)
                 },
                 Response.ErrorListener {

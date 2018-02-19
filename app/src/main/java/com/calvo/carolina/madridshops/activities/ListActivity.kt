@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -62,11 +61,9 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
 
         updateActionBarTitle()
         setup()
-        Log.d("MadridShops", "onCreate ListActivity")
     }
 
-    // TODO("Poner tiendas o actividades dependiento de quien me llame")
-    private fun updateActionBarTitle()
+     private fun updateActionBarTitle()
     {
         supportActionBar?.title = if (placeType == SHOPS) getString(R.string.shops) else getString(R.string.activities)
     }
@@ -141,7 +138,6 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
     {
         GoogleMapsUtil.initializeMap(supportFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment,
                 { map ->
-                    Log.d("Shops", "Hablemu mapa")
                     googleMap = map
                     GoogleMapsUtil.centerMapInPosition(map, MapsConstants.centerPosition.latitude, MapsConstants.centerPosition.longitude, MapsConstants.listMapZoom)
                     setMapSettings(map)

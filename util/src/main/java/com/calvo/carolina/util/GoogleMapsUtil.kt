@@ -48,7 +48,7 @@ class GoogleMapsUtil
 
                 } catch (ex: SecurityException)
                 {
-                    Log.d("Shops", ex.localizedMessage)
+                    Log.e("Shops", ex.localizedMessage)
                 }
             } else
             {

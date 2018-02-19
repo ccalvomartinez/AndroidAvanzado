@@ -1,6 +1,5 @@
 package com.calvo.carolina.repository.cache
 
-import android.util.Log
 import com.calvo.carolina.repository.db.dao.DAOPersistable
 import com.calvo.carolina.repository.models.ActivityEntity
 import com.calvo.carolina.repository.models.ShopEntity
@@ -72,7 +71,6 @@ internal class CacheDBImpl(private val shopDAO: DAOPersistable<ShopEntity>, priv
 
     override fun getAllShops(success: (shops: List<ShopEntity>) -> Unit, error: ErrorClosure)
     {
-        Log.d("Shops", "Cache GetAllShops")
         Thread(Runnable
         {
 
@@ -80,12 +78,10 @@ internal class CacheDBImpl(private val shopDAO: DAOPersistable<ShopEntity>, priv
 
             if (shopList.isNotEmpty())
             {
-                Log.d("Shops", "Cache List from database")
                 dispatchOnMainThread(Runnable { success(shopList) })
             }
             else
             {
-                Log.d("Shops", "Cache List empty")
                 dispatchOnMainThread(Runnable { error("No shops") })
             }
 
@@ -98,14 +94,11 @@ internal class CacheDBImpl(private val shopDAO: DAOPersistable<ShopEntity>, priv
         {
             try
             {
-                Log.d("Shops", "Save shops")
-
                 shopDAO.insert(shops)
                 dispatchOnMainThread(Runnable(success))
 
             } catch (e: Exception)
             {
-                Log.e("MadridShops", "Error saving: " + e.localizedMessage)
                 dispatchOnMainThread(Runnable { error(e.localizedMessage) })
             }
         }).run()
@@ -128,6 +121,4 @@ internal class CacheDBImpl(private val shopDAO: DAOPersistable<ShopEntity>, priv
 
         }).run()
     }
-
-
 }

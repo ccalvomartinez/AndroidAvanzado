@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import com.calvo.carolina.business.model.Place
 import com.calvo.carolina.madridshops.MapsConstants
 import com.calvo.carolina.madridshops.R
@@ -45,7 +44,6 @@ class DetailActivity : AppCompatActivity()
     {
         GoogleMapsUtil.initializeMap(supportFragmentManager.findFragmentById(R.id.detail_map_fragment) as SupportMapFragment,
                 { map ->
-                    Log.d("Shops", "Hablemu mapa")
                     googleMap = map
                     GoogleMapsUtil.centerMapInPosition(map, place.latitude, place.longitude, MapsConstants.detailMapZoom)
                     setMapSettings(map)
