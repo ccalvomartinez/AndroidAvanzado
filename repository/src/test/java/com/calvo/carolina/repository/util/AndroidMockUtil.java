@@ -5,17 +5,21 @@ import android.os.Looper;
 
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-
 import org.powermock.api.mockito.PowerMockito;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Utility methods that unit tests can use to do common android library mocking that might be needed.
+ * https://gist.github.com/dpmedeiros/7f7724fdf13fc5390bb05958448cdcad
  */
 public class AndroidMockUtil {
 

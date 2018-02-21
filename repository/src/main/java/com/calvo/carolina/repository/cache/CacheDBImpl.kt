@@ -5,7 +5,8 @@ import com.calvo.carolina.repository.models.ActivityEntity
 import com.calvo.carolina.repository.models.ShopEntity
 import com.calvo.carolina.util.CodeClosure
 import com.calvo.carolina.util.ErrorClosure
-import com.calvo.carolina.util.dispatchOnMainThread
+import com.calvo.carolina.util.RunnableUtils.Companion.dispatchOnMainThread
+
 
 internal class CacheDBImpl(private val shopDAO: DAOPersistable<ShopEntity>, private val activityDAO: DAOPersistable<ActivityEntity>) : Cache
 {
@@ -24,7 +25,7 @@ internal class CacheDBImpl(private val shopDAO: DAOPersistable<ShopEntity>, priv
                 }
                 else
                 {
-                    dispatchOnMainThread(Runnable { error("No shops") })
+                    dispatchOnMainThread(Runnable { error("No activities") })
                 }
             }
             catch (e: Exception)
@@ -41,9 +42,14 @@ internal class CacheDBImpl(private val shopDAO: DAOPersistable<ShopEntity>, priv
         {
             try
             {
-                activityDAO.insert(activities)
-                dispatchOnMainThread(Runnable(success))
-
+               if (activityDAO.insert(activities))
+               {
+                    dispatchOnMainThread(Runnable(success))
+               }
+                else
+               {
+                   dispatchOnMainThread(Runnable { error("Error while inserting activities") })
+               }
             } catch (e: Exception)
             {
                 dispatchOnMainThread(Runnable { error(e.localizedMessage) })
@@ -55,15 +61,22 @@ internal class CacheDBImpl(private val shopDAO: DAOPersistable<ShopEntity>, priv
     {
         Thread(Runnable
         {
-            val successDeleting = activityDAO.deleteAll()
+            try
+            {
+                val successDeleting = activityDAO.deleteAll()
 
-            if (successDeleting)
-            {
-                dispatchOnMainThread(Runnable(success))
+                if (successDeleting)
+                {
+                    dispatchOnMainThread(Runnable(success))
+                }
+                else
+                {
+                    dispatchOnMainThread(Runnable { error("Error deleting") })
+                }
             }
-            else
+            catch (e: Exception)
             {
-                dispatchOnMainThread(Runnable { error("Error deleting") })
+                dispatchOnMainThread(Runnable { error(e.localizedMessage) })
             }
 
         }).run()
@@ -74,15 +87,23 @@ internal class CacheDBImpl(private val shopDAO: DAOPersistable<ShopEntity>, priv
         Thread(Runnable
         {
 
-            val shopList = shopDAO.query()
 
-            if (shopList.isNotEmpty())
+            try
             {
-                dispatchOnMainThread(Runnable { success(shopList) })
+                val shopList = shopDAO.query()
+
+                if (shopList.isNotEmpty())
+                {
+                    dispatchOnMainThread(Runnable { success(shopList) })
+                }
+                else
+                {
+                    dispatchOnMainThread(Runnable { error("No shops") })
+                }
             }
-            else
+            catch (e: Exception)
             {
-                dispatchOnMainThread(Runnable { error("No shops") })
+                dispatchOnMainThread(Runnable { error(e.localizedMessage) })
             }
 
         }).run()
@@ -94,9 +115,13 @@ internal class CacheDBImpl(private val shopDAO: DAOPersistable<ShopEntity>, priv
         {
             try
             {
-                shopDAO.insert(shops)
-                dispatchOnMainThread(Runnable(success))
-
+                if (shopDAO.insert(shops))
+                {
+                    dispatchOnMainThread(Runnable(success))
+                } else
+                {
+                    dispatchOnMainThread(Runnable { error("Error while inserting shops") })
+                }
             } catch (e: Exception)
             {
                 dispatchOnMainThread(Runnable { error(e.localizedMessage) })
@@ -108,15 +133,22 @@ internal class CacheDBImpl(private val shopDAO: DAOPersistable<ShopEntity>, priv
     {
         Thread(Runnable
         {
-            val successDeleting = shopDAO.deleteAll()
+            try
+            {
+                val successDeleting = shopDAO.deleteAll()
 
-            if (successDeleting)
-            {
-                dispatchOnMainThread(Runnable(success))
+                if (successDeleting)
+                {
+                    dispatchOnMainThread(Runnable(success))
+                }
+                else
+                {
+                    dispatchOnMainThread(Runnable { error("Error deleting") })
+                }
             }
-            else
+            catch (e: Exception)
             {
-                dispatchOnMainThread(Runnable { error("Error deleting") })
+                dispatchOnMainThread(Runnable { error(e.localizedMessage) })
             }
 
         }).run()
