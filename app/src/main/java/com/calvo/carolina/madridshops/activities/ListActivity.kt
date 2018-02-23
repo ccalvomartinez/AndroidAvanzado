@@ -1,6 +1,7 @@
 package com.calvo.carolina.madridshops.activities
 
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,7 +15,6 @@ import android.widget.LinearLayout
 import com.calvo.carolina.business.BusinessObjectInjector
 import com.calvo.carolina.business.model.Place
 import com.calvo.carolina.business.model.Places
-import com.calvo.carolina.business.model.Shop
 import com.calvo.carolina.madridshops.MapsConstants
 import com.calvo.carolina.madridshops.R
 import com.calvo.carolina.madridshops.adapters.PlaceInfoWindowAdapter
@@ -52,15 +52,26 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
     }
 
     private val listFragment by lazy { supportFragmentManager.findFragmentById(R.id.list_fragment) as ListFragment }
-    private val placeType by lazy { intent.getStringExtra(GO_TO) }
+    private lateinit var placeType: String
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
-
+        placeType = intent.getStringExtra(GO_TO)?: ACTIVITIES
         updateActionBarTitle()
         setup()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    {
+        if (requestCode == DetailActivity.REQ_CODE && resultCode == Activity.RESULT_OK)
+        {
+            data?.let {
+                placeType = it.getStringExtra(GO_TO)
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
      private fun updateActionBarTitle()
@@ -153,7 +164,7 @@ class ListActivity : AppCompatActivity(), OnPlaceSelectedListener
         map.setOnInfoWindowClickListener {
             if (it != null)
             {
-                Router.navigateToDetail(this, it.tag as Shop)
+                Router.navigateToDetail(this, it.tag as Place)
             }
         }
         map.setInfoWindowAdapter(PlaceInfoWindowAdapter(baseContext))

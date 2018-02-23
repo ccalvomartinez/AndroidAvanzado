@@ -14,6 +14,7 @@ import java.lang.ref.WeakReference
 class BusinessObjectInjector(context: Context)
 {
     private val weakContext = WeakReference<Context>(context)
+
     fun buildGetAllShopsInteractor(): GetAllShopsInteractor
     {
         return GetAllShopsInteractorImpl(weakContext)

@@ -21,9 +21,7 @@ import org.powermock.modules.junit4.PowerMockRunner
 class CacheTests
 {
     // WARNING Estos test fallan aleatoriamente. Creo que es por la ejecución en segundo plano.
-    // TODO ("Hacer tests de Repositorio")
-    // TODO ("Hacer tests de ObjectInjector")
-    @Before
+     @Before
     fun setUp()
     {
        AndroidMockUtil.mockMainThreadHandler()

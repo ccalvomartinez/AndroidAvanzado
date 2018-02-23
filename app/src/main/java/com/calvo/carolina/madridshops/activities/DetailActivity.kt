@@ -1,10 +1,13 @@
 package com.calvo.carolina.madridshops.activities
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import com.calvo.carolina.business.model.Place
+import com.calvo.carolina.business.model.Shop
 import com.calvo.carolina.madridshops.MapsConstants
 import com.calvo.carolina.madridshops.R
 import com.calvo.carolina.util.GoogleMapsUtil
@@ -18,6 +21,7 @@ class DetailActivity : AppCompatActivity()
     companion object
     {
         const val DETAIL_PLACE = "DETAIL_PLACE"
+        const val REQ_CODE = 244
         fun intent(context: Context, place: Place): Intent
         {
             val intent = Intent(context, DetailActivity::class.java)
@@ -48,7 +52,7 @@ class DetailActivity : AppCompatActivity()
                     GoogleMapsUtil.centerMapInPosition(map, place.latitude, place.longitude, MapsConstants.detailMapZoom)
                     setMapSettings(map)
                     GoogleMapsUtil.showUserPosition(baseContext, map, this)
-                    addShopPin()
+                    addPlacePin()
                 })
     }
 
@@ -59,7 +63,7 @@ class DetailActivity : AppCompatActivity()
 
     }
 
-    private fun addShopPin()
+    private fun addPlacePin()
     {
         GoogleMapsUtil.addPin(googleMap, place.latitude, place.longitude, place.name)
     }
@@ -74,5 +78,41 @@ class DetailActivity : AppCompatActivity()
     private fun updateActionBarTitle(title:String)
     {
         supportActionBar?.title = title
+    }
+
+    override fun onBackPressed()
+    {
+       setListActivityResultAndFinish()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean
+    {
+
+        return when (item?.itemId)
+        {
+            android.R.id.home ->
+            {
+                setListActivityResultAndFinish()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    }
+
+    private  fun setListActivityResultAndFinish()
+    {
+        val intent: Intent
+        intent = if (place is Shop)
+        {
+            ListActivity.intentShops(this)
+        }
+        else
+        {
+            ListActivity.intentActivities(this)
+        }
+        setResult(Activity.RESULT_OK,intent)
+        finish()
     }
 }

@@ -7,8 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 
 
 
-
-class DBHelper(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) : SQLiteOpenHelper(context, name, factory, version)
+open class DBHelper(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) : SQLiteOpenHelper(context, name, factory, version)
 {
     // Se ejecuta cada vez que se abre la base de datos
     override fun onOpen(connection: SQLiteDatabase?)

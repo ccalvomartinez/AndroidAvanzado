@@ -13,9 +13,9 @@ import com.calvo.carolina.repository.network.GetJsonManager
 import com.calvo.carolina.repository.network.GetJsonManagerVolley
 import java.lang.ref.WeakReference
 
-class RepositoryObjectInjector(private val weakContext:  WeakReference<Context>)
+open class RepositoryObjectInjector(private val weakContext:  WeakReference<Context>)
 {
-   fun buildRepository(): Repository
+   open fun buildRepository(): Repository
     {
         return RepositoryImpl(buildCache(), buildGetJsonManager())
     }

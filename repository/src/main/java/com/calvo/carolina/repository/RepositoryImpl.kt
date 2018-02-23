@@ -31,6 +31,7 @@ class RepositoryImpl internal constructor(private val cache: Cache, private val 
         // Read all shops from cache
         cache.getAllShops(
                 success = {
+                    success(it)
                 },
                 error = {
                     populateCacheShops(success, error)

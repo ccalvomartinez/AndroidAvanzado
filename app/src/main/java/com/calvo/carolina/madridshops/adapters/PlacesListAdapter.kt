@@ -29,7 +29,7 @@ class PlacesListAdapter(private val places: Places): RecyclerView.Adapter<Places
 
     override fun onBindViewHolder(holder: PlaceViewHolder?, position: Int)
     {
-        holder?.bindShop(places.get(position))
+        holder?.bindPlace(places.get(position))
     }
 
     override fun getItemCount(): Int
@@ -39,7 +39,7 @@ class PlacesListAdapter(private val places: Places): RecyclerView.Adapter<Places
 
     inner class PlaceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
-        fun bindShop(place: Place)
+        fun bindPlace(place: Place)
         {
 
             itemView.cell_list_name.text = place.name

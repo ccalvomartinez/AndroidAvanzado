@@ -8,6 +8,7 @@ import com.calvo.carolina.repository.network.GetJsonManagerVolley
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.lang.ref.WeakReference
 
 /**
  * ----------------------------------------------------------------------------------
@@ -29,7 +30,7 @@ class GetJsonManagerVolleyTest
     {
         val url = "http://madrid-shops.com/json_new/getShops.php"
 
-        val jsonManager: GetJsonManager = GetJsonManagerVolley(appContext)
+        val jsonManager: GetJsonManager = GetJsonManagerVolley(WeakReference(appContext))
 
         jsonManager.execute(url,
                 { json: String ->

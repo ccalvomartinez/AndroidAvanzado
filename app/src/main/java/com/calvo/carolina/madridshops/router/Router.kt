@@ -21,7 +21,7 @@ class Router
 
         fun navigateToDetail(activity: AppCompatActivity, place: Place)
         {
-            activity.startActivity(DetailActivity.intent(activity, place))
+            activity.startActivityForResult(DetailActivity.intent(activity, place), DetailActivity.REQ_CODE)
         }
     }
 }

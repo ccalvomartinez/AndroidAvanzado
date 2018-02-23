@@ -4,7 +4,9 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 26
 
-
+    packagingOptions {
+        pickFirst 'protobuf.meta'
+    }
 
     defaultConfig {
         minSdkVersion 19

@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference
 
 class GetAllActivitiesInteractorImpl(weakContext: WeakReference<Context>): GetAllActivitiesInteractor
 {
-    private val repository: Repository =  RepositoryObjectInjector(weakContext).buildRepository()
+     val repository: Repository =  RepositoryObjectInjector(weakContext).buildRepository()
 
     override fun execute(isSpanish: Boolean, success: SuccessClosure<Places>, error: ErrorClosure)
     {
